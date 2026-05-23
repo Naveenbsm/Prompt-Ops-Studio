@@ -1,0 +1,241 @@
+"use client";
+
+import * as React from "react";
+import { toast } from "sonner";
+import {
+  Bell,
+  FileText,
+  MessageSquare,
+  Bug,
+  Calendar,
+  DollarSign,
+  GitPullRequest,
+  Star,
+  CheckCircle,
+  Mail,
+  AlertTriangle,
+  FileSignature,
+  Plus,
+  type LucideIcon,
+} from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { PageSkeleton } from "@/components/dashboard/page-skeleton";
+import { EmptyState } from "@/components/dashboard/empty-state";
+import { StatusBadge } from "@/components/workflows/status-badge";
+import { automations, type Automation, type WorkflowStatus } from "@/lib/mock-data";
+import { cn } from "@/lib/utils";
+
+const iconMap: Record<string, LucideIcon> = {
+  Bell,
+  FileText,
+  MessageSquare,
+  Bug,
+  Calendar,
+  DollarSign,
+  GitPullRequest,
+  Star,
+  CheckCircle,
+  Mail,
+  AlertTriangle,
+  FileSignature,
+};
+
+const filters: ("All" | WorkflowStatus)[] = ["All", "Active", "Paused", "Draft"];
+
+export default function AutomationPage() {
+  const [filter, setFilter] = React.useState<"All" | WorkflowStatus>("All");
+  const [items, setItems] = React.useState<Automation[]>(automations);
+
+  const visible = items.filter((a) => filter === "All" || a.status === filter);
+
+  const toggle = (id: string) =>
+    setItems((prev) =>
+      prev.map((a) =>
+        a.id === id
+          ? {
+              ...a,
+              enabled: !a.enabled,
+              status: !a.enabled ? "Active" : "Paused",
+            }
+          : a
+      )
+    );
+
+  return (
+    <PageSkeleton>
+      <div className="space-y-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="text-xl font-semibold tracking-tight">Automation</h2>
+            <p className="text-sm text-muted-foreground">
+              Build and manage rule-based automations across your tools.
+            </p>
+          </div>
+          <NewAutomationDialog />
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {filters.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={cn(
+                "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors",
+                filter === f
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
+              )}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        {visible.length === 0 ? (
+          <EmptyState
+            title="No automations in this filter"
+            description="Switch to another tab or create your first automation."
+          />
+        ) : (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {visible.map((a) => {
+              const Icon = iconMap[a.icon] ?? Bell;
+              return (
+                <Card key={a.id} className="p-5 transition-shadow hover:shadow-md">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/15 to-purple-500/15 text-primary">
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold leading-tight">{a.name}</p>
+                        <p className="text-xs text-muted-foreground">{a.category}</p>
+                      </div>
+                    </div>
+                    <Switch checked={a.enabled} onCheckedChange={() => toggle(a.id)} />
+                  </div>
+                  <div className="mt-4 space-y-1 rounded-lg border border-border bg-secondary/40 p-3 text-xs">
+                    <div className="flex gap-1">
+                      <span className="font-medium text-muted-foreground w-14">When</span>
+                      <span className="text-foreground">{a.trigger}</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <span className="font-medium text-muted-foreground w-14">Then</span>
+                      <span className="text-foreground">{a.action}</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-xs text-muted-foreground">
+                      {a.runs.toLocaleString()} runs
+                    </span>
+                    <StatusBadge status={a.status} />
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </PageSkeleton>
+  );
+}
+
+function NewAutomationDialog() {
+  const [open, setOpen] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [trigger, setTrigger] = React.useState("schedule");
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>
+          <Plus className="h-4 w-4" /> New Automation
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create a new automation</DialogTitle>
+          <DialogDescription>
+            Pick a trigger and we'll suggest an action template.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-3">
+          <div className="space-y-1.5">
+            <Label htmlFor="aut-name">Automation name</Label>
+            <Input
+              id="aut-name"
+              placeholder="e.g. Notify CSM on detractor NPS"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label>Trigger</Label>
+            <Select value={trigger} onValueChange={setTrigger}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="schedule">On schedule</SelectItem>
+                <SelectItem value="webhook">Webhook received</SelectItem>
+                <SelectItem value="email">New email matches</SelectItem>
+                <SelectItem value="event">App event</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1.5">
+            <Label>Action</Label>
+            <Select defaultValue="slack">
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="slack">Send Slack message</SelectItem>
+                <SelectItem value="email">Send email</SelectItem>
+                <SelectItem value="create-row">Create row in Sheets</SelectItem>
+                <SelectItem value="webhook">Call webhook</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+        <div className="flex justify-end gap-2">
+          <Button variant="ghost" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              setOpen(false);
+              toast.success(`Automation "${name || "Untitled"}" created`);
+              setTimeout(() => {
+                setName("");
+                setTrigger("schedule");
+              }, 250);
+            }}
+          >
+            Create
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
