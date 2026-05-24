@@ -32,8 +32,8 @@ const typeVariant: Record<string, "default" | "success" | "warning" | "neutral">
   Financial: "default",
   Performance: "success",
   Compliance: "warning",
-  Analytics: "neutral",
-  Operations: "default",
+  Forensics: "neutral",
+  "DNA Library": "default",
 };
 
 export default function ReportsPage() {
@@ -157,11 +157,11 @@ function GenerateReportDialog({ onCreate }: { onCreate: (r: ReportItem) => void 
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Financial">Financial</SelectItem>
                   <SelectItem value="Performance">Performance</SelectItem>
-                  <SelectItem value="Analytics">Analytics</SelectItem>
-                  <SelectItem value="Operations">Operations</SelectItem>
-                  <SelectItem value="Compliance">Compliance</SelectItem>
+                  <SelectItem value="Forensics">Forensics (PFFE)</SelectItem>
+                  <SelectItem value="Compliance">Compliance (ICO/GDPR)</SelectItem>
+                  <SelectItem value="DNA Library">DNA Library</SelectItem>
+                  <SelectItem value="Financial">Financial</SelectItem>
                 </SelectContent>
               </Select>
             </div>

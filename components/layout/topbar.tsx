@@ -64,7 +64,7 @@ export function Topbar() {
         <div className="relative hidden md:block">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="Search workflows, reports..."
+            placeholder="Search DNA, forensics, reports..."
             className="h-9 w-56 lg:w-72 pl-9 pr-14"
           />
           <kbd className="pointer-events-none absolute right-2 top-1/2 hidden -translate-y-1/2 select-none items-center gap-0.5 rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground lg:inline-flex">
@@ -88,10 +88,10 @@ export function Topbar() {
             <DropdownMenuSeparator />
             <div className="max-h-80 overflow-auto py-1">
               {[
-                { title: "Workflow 'Invoice Processing' completed", time: "2m ago", tone: "good" },
-                { title: "Lead Scoring saved 42 hrs this week", time: "1h ago", tone: "good" },
-                { title: "Vendor Compliance Check is in Draft", time: "3h ago", tone: "warn" },
-                { title: "SOC2 evidence collection started", time: "5h ago", tone: "neutral" },
+                { title: "PFFE caught a hallucination on 'Bid Response Composer'", time: "2m ago", tone: "warn" },
+                { title: "Engagement Letter DNA cloned 4 times this week", time: "1h ago", tone: "good" },
+                { title: "Vendor Due Diligence Check is in Draft", time: "3h ago", tone: "warn" },
+                { title: "ICO evidence pack export ready", time: "5h ago", tone: "neutral" },
               ].map((n, i) => (
                 <div key={i} className="flex items-start gap-3 px-2 py-2 hover:bg-secondary rounded-md">
                   <span

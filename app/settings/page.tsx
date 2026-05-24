@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { toast } from "sonner";
-import { Camera, Check, CreditCard } from "lucide-react";
+import { Camera, Check, CreditCard, Sparkles } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,7 @@ import {
   invoices,
   notificationSettings as initialNotifications,
   planUsage,
+  planTiers,
   type Integration,
   type NotificationSetting,
 } from "@/lib/mock-data";
@@ -174,10 +175,12 @@ function ProfileTab() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="Operations">Operations</SelectItem>
+              <SelectItem value="Consulting">Consulting</SelectItem>
+              <SelectItem value="Legal">Legal</SelectItem>
+              <SelectItem value="IT Services">IT Services</SelectItem>
+              <SelectItem value="Compliance">Compliance</SelectItem>
+              <SelectItem value="Creative">Creative</SelectItem>
               <SelectItem value="Finance">Finance</SelectItem>
-              <SelectItem value="Sales">Sales</SelectItem>
-              <SelectItem value="Support">Support</SelectItem>
-              <SelectItem value="Engineering">Engineering</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -296,6 +299,11 @@ function IntegrationsTab() {
 
 function BillingTab() {
   const pct = (used: number, limit: number) => Math.round((used / limit) * 100);
+  const [activePlan, setActivePlan] = useLocalStorage<string>(
+    storageKeys.plan,
+    "dna-architect"
+  );
+  const current = planTiers.find((p) => p.id === activePlan) ?? planTiers[1];
 
   return (
     <div className="space-y-4">
@@ -303,15 +311,15 @@ function BillingTab() {
         <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <p className="text-xl font-semibold">{planUsage.plan}</p>
+              <p className="text-xl font-semibold">{current.name}</p>
               <Badge variant="default">Current plan</Badge>
             </div>
             <p className="mt-1 text-sm text-muted-foreground">
-              {formatCurrency(planUsage.price)} / {planUsage.cycle} · renews May 31, 2026
+              {formatCurrency(current.price)} / month
+              {current.cadence === "month-volume" ? " (volume tier)" : ""} · renews May 31, 2026
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="outline">Change plan</Button>
             <Button>
               <CreditCard className="h-4 w-4" /> Manage billing
             </Button>
@@ -319,7 +327,7 @@ function BillingTab() {
         </div>
         <div className="grid grid-cols-1 gap-4 border-t border-border p-6 sm:grid-cols-3">
           <UsageBar
-            label="Workflows"
+            label="Workflow DNA"
             used={planUsage.workflowsUsed}
             limit={planUsage.workflowsLimit}
             pct={pct(planUsage.workflowsUsed, planUsage.workflowsLimit)}
@@ -337,6 +345,70 @@ function BillingTab() {
             pct={pct(planUsage.seatsUsed, planUsage.seatsLimit)}
           />
         </div>
+      </Card>
+
+      <Card className="p-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold">Choose your plan</p>
+            <p className="text-xs text-muted-foreground">UK SME pricing in GBP. Switch anytime.</p>
+          </div>
+        </div>
+        <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+          {planTiers.map((tier) => {
+            const isCurrent = tier.id === activePlan;
+            return (
+              <div
+                key={tier.id}
+                className={cn(
+                  "relative flex flex-col rounded-xl border p-5 transition-shadow",
+                  isCurrent
+                    ? "border-primary bg-primary/[0.04] shadow-[0_8px_24px_-12px_rgba(99,91,255,0.35)]"
+                    : "border-border bg-card hover:shadow-md"
+                )}
+              >
+                {tier.popular && (
+                  <span className="absolute -top-2 right-4 inline-flex items-center gap-1 rounded-full bg-foreground px-2 py-0.5 text-[10px] font-medium text-background">
+                    <Sparkles className="h-3 w-3" /> Most popular
+                  </span>
+                )}
+                <p className="text-sm font-semibold">{tier.name}</p>
+                <p className="text-xs text-muted-foreground">{tier.audience}</p>
+                <div className="mt-3 flex items-baseline gap-1">
+                  <span className="text-2xl font-semibold tracking-tight">
+                    {formatCurrency(tier.price)}
+                  </span>
+                  <span className="text-xs text-muted-foreground">
+                    {tier.cadence === "month-volume" ? "/ month (volume)" : "/ month"}
+                  </span>
+                </div>
+                <ul className="mt-4 space-y-2 text-xs">
+                  {tier.highlights.map((h) => (
+                    <li key={h} className="flex items-start gap-2">
+                      <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-emerald-600" />
+                      <span className="leading-snug">{h}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  variant={isCurrent ? "outline" : "default"}
+                  size="sm"
+                  className="mt-5"
+                  disabled={isCurrent}
+                  onClick={() => {
+                    setActivePlan(tier.id);
+                    toast.success(`Switched to ${tier.name}`);
+                  }}
+                >
+                  {isCurrent ? "Current plan" : `Switch to ${tier.name}`}
+                </Button>
+              </div>
+            );
+          })}
+        </div>
+        <p className="mt-4 text-[11px] text-muted-foreground">
+          Add-ons: DNA Setup & API Sync £500 · Forensic Health Assessment £550
+        </p>
       </Card>
 
       <Card className="p-6">

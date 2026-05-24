@@ -13,18 +13,18 @@ export function formatNumber(n: number): string {
 
 export function formatCurrency(n: number, opts: { compact?: boolean } = {}) {
   if (opts.compact) {
-    if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(2)}M`;
-    if (n >= 1_000) return `$${(n / 1_000).toFixed(1)}k`;
+    if (n >= 1_000_000) return `£${(n / 1_000_000).toFixed(2)}M`;
+    if (n >= 1_000) return `£${(n / 1_000).toFixed(1)}k`;
   }
-  return n.toLocaleString("en-US", {
+  return n.toLocaleString("en-GB", {
     style: "currency",
-    currency: "USD",
+    currency: "GBP",
     maximumFractionDigits: 0,
   });
 }
 
 export function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-US", {
+  return new Date(iso).toLocaleDateString("en-GB", {
     month: "short",
     day: "numeric",
     year: "numeric",

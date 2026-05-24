@@ -8,8 +8,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Promptops AI Dashboard",
-  description: "AI-powered workflow operations and automation dashboard.",
+  title: "PromptOps AI · Workflow DNA Platform",
+  description:
+    "Capture, score and clone Workflow DNA. Catch hallucinations with PFFE forensics, stay UK ICO/GDPR audit-ready.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

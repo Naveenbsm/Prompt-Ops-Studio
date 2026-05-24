@@ -41,16 +41,32 @@ export function WorkflowDetailSheet({ workflow, open, onOpenChange, onToggleStat
             <div className="space-y-6 p-6 pt-2">
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-lg border border-border bg-secondary/40 p-3">
-                  <p className="text-xs text-muted-foreground">Department</p>
+                  <p className="text-xs text-muted-foreground">Practice</p>
                   <p className="mt-0.5 text-sm font-medium">{workflow.department}</p>
                 </div>
                 <div className="rounded-lg border border-border bg-secondary/40 p-3">
-                  <p className="text-xs text-muted-foreground">Owner</p>
+                  <p className="text-xs text-muted-foreground">DNA architect</p>
                   <p className="mt-0.5 text-sm font-medium">{workflow.owner}</p>
                 </div>
                 <div className="rounded-lg border border-border bg-secondary/40 p-3">
-                  <p className="text-xs text-muted-foreground">Efficiency</p>
-                  <p className="mt-0.5 text-sm font-medium">{workflow.efficiency}%</p>
+                  <p className="text-xs text-muted-foreground">Logic Score</p>
+                  <p className="mt-0.5 text-sm font-medium">{workflow.efficiency} / 100</p>
+                </div>
+                <div className="rounded-lg border border-border bg-secondary/40 p-3">
+                  <p className="text-xs text-muted-foreground">DNA fingerprint</p>
+                  <p className="mt-0.5 text-sm font-medium">{workflow.dnaScore} / 100</p>
+                </div>
+                <div className="rounded-lg border border-border bg-secondary/40 p-3">
+                  <p className="text-xs text-muted-foreground">Clones across team</p>
+                  <p className="mt-0.5 text-sm font-medium">{workflow.clones}</p>
+                </div>
+                <div className="rounded-lg border border-border bg-secondary/40 p-3">
+                  <p className="text-xs text-muted-foreground">Model</p>
+                  <p className="mt-0.5 text-sm font-medium">{workflow.model}</p>
+                </div>
+                <div className="rounded-lg border border-border bg-secondary/40 p-3">
+                  <p className="text-xs text-muted-foreground">PFFE flag rate</p>
+                  <p className="mt-0.5 text-sm font-medium">{workflow.hallucinationRate}%</p>
                 </div>
                 <div className="rounded-lg border border-border bg-secondary/40 p-3">
                   <p className="text-xs text-muted-foreground">Total runs</p>
@@ -60,7 +76,7 @@ export function WorkflowDetailSheet({ workflow, open, onOpenChange, onToggleStat
 
               <div>
                 <div className="mb-2 flex items-center justify-between">
-                  <h4 className="text-sm font-semibold">Efficiency · last 14 days</h4>
+                  <h4 className="text-sm font-semibold">Logic Score · last 14 days</h4>
                   <Badge variant="default">+4.2%</Badge>
                 </div>
                 <div className="h-44 rounded-xl border border-border bg-card p-2">
@@ -122,7 +138,7 @@ export function WorkflowDetailSheet({ workflow, open, onOpenChange, onToggleStat
                     </>
                   )}
                 </Button>
-                <Button variant="outline">Edit workflow</Button>
+                <Button variant="outline">Edit DNA</Button>
               </div>
             </div>
           </>

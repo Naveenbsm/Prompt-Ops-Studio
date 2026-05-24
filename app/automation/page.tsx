@@ -101,9 +101,9 @@ export default function AutomationPage() {
       <div className="space-y-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-semibold tracking-tight">Automation</h2>
+            <h2 className="text-xl font-semibold tracking-tight">Logic Triggers</h2>
             <p className="text-sm text-muted-foreground">
-              Build and manage rule-based automations across your tools.
+              Event-driven rules that fire your captured Workflow DNA across HubSpot, Slack, MS365 and more.
             </p>
           </div>
           <NewAutomationDialog onCreate={add} />
@@ -128,8 +128,8 @@ export default function AutomationPage() {
 
         {visible.length === 0 ? (
           <EmptyState
-            title="No automations in this filter"
-            description="Switch to another tab or create your first automation."
+            title="No Logic Triggers in this filter"
+            description="Switch to another tab or create your first Logic Trigger."
           />
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -216,38 +216,40 @@ function NewAutomationDialog({ onCreate }: { onCreate: (a: Automation) => void }
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <Plus className="h-4 w-4" /> New Automation
+          <Plus className="h-4 w-4" /> New Logic Trigger
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create a new automation</DialogTitle>
+          <DialogTitle>Create a new Logic Trigger</DialogTitle>
           <DialogDescription>
-            Pick a trigger and we&apos;ll suggest an action template.
+            Pick an event and PromptOps will suggest a DNA pattern to fire.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-3">
           <div className="space-y-1.5">
-            <Label htmlFor="aut-name">Automation name</Label>
+            <Label htmlFor="aut-name">Trigger name</Label>
             <Input
               id="aut-name"
-              placeholder="e.g. Notify CSM on detractor NPS"
+              placeholder="e.g. Fire DPIA DNA on new vendor"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="space-y-1.5">
-            <Label>Category</Label>
+            <Label>Practice</Label>
             <Select value={category} onValueChange={setCategory}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Sales">Sales</SelectItem>
+                <SelectItem value="Consulting">Consulting</SelectItem>
+                <SelectItem value="Legal">Legal</SelectItem>
+                <SelectItem value="IT Services">IT Services</SelectItem>
                 <SelectItem value="Finance">Finance</SelectItem>
-                <SelectItem value="Engineering">Engineering</SelectItem>
-                <SelectItem value="Support">Support</SelectItem>
-                <SelectItem value="Marketing">Marketing</SelectItem>
+                <SelectItem value="Compliance">Compliance</SelectItem>
+                <SelectItem value="Creative">Creative</SelectItem>
+                <SelectItem value="Customer Success">Customer Success</SelectItem>
                 <SelectItem value="Productivity">Productivity</SelectItem>
               </SelectContent>
             </Select>
@@ -287,7 +289,7 @@ function NewAutomationDialog({ onCreate }: { onCreate: (a: Automation) => void }
           </Button>
           <Button
             onClick={() => {
-              const finalName = name.trim() || "Untitled automation";
+              const finalName = name.trim() || "Untitled Logic Trigger";
               const a: Automation = {
                 id: `auto-${Date.now().toString(36)}`,
                 name: finalName,
@@ -301,7 +303,7 @@ function NewAutomationDialog({ onCreate }: { onCreate: (a: Automation) => void }
               };
               onCreate(a);
               setOpen(false);
-              toast.success(`Automation "${finalName}" created`);
+              toast.success(`Logic Trigger "${finalName}" created`);
               setTimeout(reset, 250);
             }}
           >

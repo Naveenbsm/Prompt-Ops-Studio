@@ -5,10 +5,16 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { navItems } from "./sidebar-nav";
 import { Logo } from "./logo";
-import { Sparkles } from "lucide-react";
+import { Sparkles, CheckCircle2 } from "lucide-react";
+import { useLocalStorage, storageKeys } from "@/lib/use-local-storage";
+import { planTiers } from "@/lib/mock-data";
 
 export function Sidebar() {
   const pathname = usePathname();
+  const [activePlanId] = useLocalStorage<string>(storageKeys.plan, "logic-core");
+  const activePlan = planTiers.find((p) => p.id === activePlanId) ?? planTiers[0];
+  const isTopPlan = activePlan.id === "logic-sovereign";
+
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden md:flex md:w-60 lg:w-64 flex-col border-r border-border bg-card/60 backdrop-blur-xl">
       <div className="flex h-16 items-center border-b border-border px-5">
@@ -46,15 +52,24 @@ export function Sidebar() {
       <div className="border-t border-border p-3">
         <div className="surface-soft rounded-xl border border-border p-4">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-semibold">Upgrade to Pro</span>
+            {isTopPlan ? (
+              <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+            ) : (
+              <Sparkles className="h-4 w-4 text-primary" />
+            )}
+            <span className="text-sm font-semibold truncate">{activePlan.name}</span>
           </div>
           <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-            Unlock advanced AI insights, unlimited workflows, and priority support.
+            {isTopPlan
+              ? activePlan.highlights[0]
+              : `£${activePlan.price}/mo · ${activePlan.highlights[0]}`}
           </p>
-          <button className="mt-3 w-full rounded-md bg-foreground px-3 py-1.5 text-xs font-medium text-background shadow-sm transition-opacity hover:opacity-90">
-            Upgrade now
-          </button>
+          <Link
+            href="/pricing"
+            className="mt-3 flex w-full items-center justify-center rounded-md bg-foreground px-3 py-1.5 text-xs font-medium text-background shadow-sm transition-opacity hover:opacity-90"
+          >
+            {isTopPlan ? "Manage plan" : "Upgrade plan"}
+          </Link>
         </div>
       </div>
     </aside>

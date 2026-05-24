@@ -23,7 +23,7 @@ export function Logo({ collapsed = false, className }: { collapsed?: boolean; cl
             >Ops</span>
           </span>
           <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-            Operations Platform
+            AI · Workflow DNA
           </span>
         </div>
       )}

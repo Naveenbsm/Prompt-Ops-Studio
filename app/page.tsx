@@ -8,7 +8,7 @@ import { ImpactBars } from "@/components/dashboard/impact-bars";
 import { ImpactChart } from "@/components/dashboard/impact-chart";
 import { DeltaPill } from "@/components/dashboard/delta-pill";
 import { Badge } from "@/components/ui/badge";
-import { metrics, improvementAreas } from "@/lib/mock-data";
+import { metrics, improvementAreas, pilotBenchmarks } from "@/lib/mock-data";
 
 export default function OverviewPage() {
   return (
@@ -20,11 +20,11 @@ export default function OverviewPage() {
               Good morning, Alex <span className="ml-1">👋</span>
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Here's a snapshot of your workflows for the last 30 days.
+              Your Workflow DNA library and PFFE forensics from the last 30 days.
             </p>
           </div>
           <Badge variant="outline" className="hidden sm:inline-flex">
-            Last updated · 2m ago
+            Last sync · 2m ago
           </Badge>
         </div>
 
@@ -44,35 +44,35 @@ export default function OverviewPage() {
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <SectionCard
-            title="Workflow Health Score"
-            description="Composite score across reliability, speed, and adoption."
+            title="Workflow Logic Score"
+            description="Composite quality across reliability, fidelity, and adoption."
             action={<DeltaPill value={9} />}
           >
             <DonutScore value={87} label="Excellent" />
             <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
               <div className="rounded-lg bg-secondary/60 p-2">
-                <p className="font-semibold text-foreground">99.2%</p>
-                <p className="text-muted-foreground">Uptime</p>
-              </div>
-              <div className="rounded-lg bg-secondary/60 p-2">
-                <p className="font-semibold text-foreground">4.1s</p>
-                <p className="text-muted-foreground">Avg run</p>
-              </div>
-              <div className="rounded-lg bg-secondary/60 p-2">
                 <p className="font-semibold text-foreground">82%</p>
-                <p className="text-muted-foreground">Adoption</p>
+                <p className="text-muted-foreground">PFFE acc.</p>
+              </div>
+              <div className="rounded-lg bg-secondary/60 p-2">
+                <p className="font-semibold text-foreground">89%</p>
+                <p className="text-muted-foreground">Clone rate</p>
+              </div>
+              <div className="rounded-lg bg-secondary/60 p-2">
+                <p className="font-semibold text-foreground">95%</p>
+                <p className="text-muted-foreground">UK comp.</p>
               </div>
             </div>
           </SectionCard>
 
           <SectionCard
-            title="Automation Impact"
-            description="High-impact automations contributing the most ROI."
+            title="Logic Cloning Impact"
+            description="DNA patterns reused across the team this quarter."
             action={<DeltaPill value={22} />}
           >
             <div className="flex items-baseline gap-2">
-              <p className="text-4xl font-semibold tracking-tight">62</p>
-              <p className="text-sm text-muted-foreground">High Impact Automations</p>
+              <p className="text-4xl font-semibold tracking-tight">76</p>
+              <p className="text-sm text-muted-foreground">High-impact DNA clones</p>
             </div>
             <div className="mt-3">
               <ImpactChart />
@@ -80,13 +80,30 @@ export default function OverviewPage() {
           </SectionCard>
 
           <SectionCard
-            title="Top Improvement Areas"
-            description="Where AI suggests focusing next."
+            title="Where DNA Helps Most"
+            description="Workflows PromptOps recommends cloning next."
             action={<Badge variant="default">5 areas</Badge>}
           >
             <ImpactBars items={improvementAreas} />
           </SectionCard>
         </div>
+
+        <SectionCard
+          title="8-week UK pilot benchmarks"
+          description="Validated across 5 UK consulting, legal, IT and creative firms."
+        >
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {pilotBenchmarks.map((b) => (
+              <div
+                key={b.label}
+                className="rounded-xl border border-border bg-card p-4"
+              >
+                <p className="text-xs text-muted-foreground">{b.label}</p>
+                <p className="mt-1 text-xl font-semibold tracking-tight">{b.value}</p>
+              </div>
+            ))}
+          </div>
+        </SectionCard>
       </div>
     </PageSkeleton>
   );

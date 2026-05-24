@@ -56,7 +56,7 @@ export default function InsightsPage() {
           <div>
             <h2 className="text-xl font-semibold tracking-tight">Insights</h2>
             <p className="text-sm text-muted-foreground">
-              AI-surfaced trends and recommendations across your workspace.
+              Outcome-Learning Memory surfaces trends linking DNA outputs to client P&amp;L.
             </p>
           </div>
           <div className="inline-flex rounded-lg border border-border p-1">
@@ -79,8 +79,8 @@ export default function InsightsPage() {
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <SectionCard
-            title="Efficiency trend"
-            description="Average workflow efficiency over time."
+            title="Logic Score trend"
+            description="Average Workflow DNA Logic Score over time."
             className="lg:col-span-2"
             action={<Badge variant="success">+8.6%</Badge>}
           >
@@ -119,8 +119,8 @@ export default function InsightsPage() {
           </SectionCard>
 
           <SectionCard
-            title="Workflows by department"
-            description="Distribution across teams."
+            title="DNA patterns by practice"
+            description="Distribution across UK practices."
           >
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">

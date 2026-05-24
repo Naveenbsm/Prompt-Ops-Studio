@@ -101,9 +101,9 @@ export default function WorkflowsPage() {
       <div className="space-y-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-semibold tracking-tight">Workflows</h2>
+            <h2 className="text-xl font-semibold tracking-tight">Workflow DNA Library</h2>
             <p className="text-sm text-muted-foreground">
-              {filtered.length} of {workflows.length} workflows
+              {filtered.length} of {workflows.length} captured DNA patterns — fingerprinted, scored and cloneable.
             </p>
           </div>
           <CreateWorkflowDialog onCreate={addWorkflow} />
@@ -135,10 +135,10 @@ export default function WorkflowsPage() {
               </Select>
               <Select value={dept} onValueChange={setDept}>
                 <SelectTrigger className="w-44">
-                  <SelectValue placeholder="Department" />
+                  <SelectValue placeholder="Practice" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="All">All departments</SelectItem>
+                  <SelectItem value="All">All practices</SelectItem>
                   {departments.map((d) => (
                     <SelectItem key={d} value={d}>
                       {d}
@@ -152,8 +152,8 @@ export default function WorkflowsPage() {
           {filtered.length === 0 ? (
             <div className="p-6">
               <EmptyState
-                title="No workflows match those filters"
-                description="Try clearing the search or switching to a different department."
+                title="No DNA patterns match those filters"
+                description="Try clearing the search or switching to a different practice."
                 action={
                   <Button
                     variant="outline"
@@ -172,10 +172,12 @@ export default function WorkflowsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Department</TableHead>
+                  <TableHead>DNA pattern</TableHead>
+                  <TableHead>Practice</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Efficiency</TableHead>
+                  <TableHead>Logic Score</TableHead>
+                  <TableHead className="hidden lg:table-cell">Clones</TableHead>
+                  <TableHead className="hidden xl:table-cell">Model</TableHead>
                   <TableHead>Last Run</TableHead>
                   <TableHead className="w-12 text-right">Actions</TableHead>
                 </TableRow>
@@ -207,9 +209,15 @@ export default function WorkflowsPage() {
                           />
                         </div>
                         <span className="text-xs tabular-nums text-muted-foreground">
-                          {w.efficiency}%
+                          {w.efficiency}
                         </span>
                       </div>
+                    </TableCell>
+                    <TableCell className="hidden lg:table-cell text-sm tabular-nums text-muted-foreground">
+                      {w.clones}
+                    </TableCell>
+                    <TableCell className="hidden xl:table-cell text-xs text-muted-foreground">
+                      {w.model}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {relativeTime(w.lastRun)}

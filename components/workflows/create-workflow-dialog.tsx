@@ -47,7 +47,7 @@ export function CreateWorkflowDialog({ onCreate }: CreateWorkflowDialogProps) {
   };
 
   const submit = () => {
-    const finalName = name.trim() || "Untitled workflow";
+    const finalName = name.trim() || "Untitled DNA pattern";
     const wf: Workflow = {
       id: `wf-${Date.now().toString(36)}`,
       name: finalName,
@@ -57,12 +57,16 @@ export function CreateWorkflowDialog({ onCreate }: CreateWorkflowDialogProps) {
       lastRun: new Date().toISOString(),
       runs: 0,
       owner: "Alex Rivera",
-      description: description.trim() || `Auto-generated ${trigger} workflow.`,
+      description: description.trim() || `Auto-synthesised ${trigger} DNA pattern.`,
+      dnaScore: Math.floor(60 + Math.random() * 20),
+      clones: 0,
+      model: "Claude Sonnet 4.6",
+      hallucinationRate: Number((1 + Math.random() * 3).toFixed(1)),
     };
     onCreate?.(wf);
     setOpen(false);
-    toast.success(`Workflow "${finalName}" created`, {
-      description: "It is now in draft. You can publish it from the workflow detail panel.",
+    toast.success(`DNA pattern "${finalName}" captured`, {
+      description: "It is now in draft. Publish it from the DNA detail panel.",
     });
     setTimeout(reset, 250);
   };
@@ -77,14 +81,14 @@ export function CreateWorkflowDialog({ onCreate }: CreateWorkflowDialogProps) {
     >
       <DialogTrigger asChild>
         <Button>
-          <Plus className="h-4 w-4" /> Create Workflow
+          <Plus className="h-4 w-4" /> Capture DNA
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>New workflow</DialogTitle>
+          <DialogTitle>Capture a Workflow DNA pattern</DialogTitle>
           <DialogDescription>
-            Build a workflow in a few steps. You can edit any of this later.
+            PromptOps will fingerprint the prompt chain, score it, and add it to your library.
           </DialogDescription>
         </DialogHeader>
 
@@ -119,10 +123,10 @@ export function CreateWorkflowDialog({ onCreate }: CreateWorkflowDialogProps) {
         {step === 0 && (
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="wf-name">Workflow name</Label>
+              <Label htmlFor="wf-name">DNA pattern name</Label>
               <Input
                 id="wf-name"
-                placeholder="e.g. Customer Refund Automation"
+                placeholder="e.g. Engagement Letter (England & Wales)"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -131,13 +135,13 @@ export function CreateWorkflowDialog({ onCreate }: CreateWorkflowDialogProps) {
               <Label htmlFor="wf-desc">Description</Label>
               <Input
                 id="wf-desc"
-                placeholder="What does this workflow do?"
+                placeholder="What business intent does this DNA satisfy?"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div className="space-y-1.5">
-              <Label>Department</Label>
+              <Label>Practice</Label>
               <Select value={dept} onValueChange={setDept}>
                 <SelectTrigger>
                   <SelectValue />
@@ -186,10 +190,10 @@ export function CreateWorkflowDialog({ onCreate }: CreateWorkflowDialogProps) {
           <div className="space-y-2 rounded-xl border border-border bg-secondary/40 p-4 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Name</span>
-              <span className="font-medium">{name || "Untitled workflow"}</span>
+              <span className="font-medium">{name || "Untitled DNA pattern"}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Department</span>
+              <span className="text-muted-foreground">Practice</span>
               <span className="font-medium">{dept}</span>
             </div>
             <div className="flex justify-between">

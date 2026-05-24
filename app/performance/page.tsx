@@ -35,7 +35,7 @@ export default function PerformancePage() {
           <div>
             <h2 className="text-xl font-semibold tracking-tight">Performance</h2>
             <p className="text-sm text-muted-foreground">
-              Team and individual workflow performance.
+              Logic Score and DNA reuse by team and individual.
             </p>
           </div>
           <Badge variant="default">Quarter to date</Badge>
@@ -43,8 +43,8 @@ export default function PerformancePage() {
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <SectionCard
-            title="Performance by team"
-            description="Composite score (0–100) across reliability, speed, and ROI."
+            title="Logic Score by team"
+            description="Composite score (0–100) across reliability, fidelity, and ROI."
             className="lg:col-span-2"
           >
             <div className="h-72">
@@ -122,8 +122,8 @@ export default function PerformancePage() {
         </div>
 
         <SectionCard
-          title="Performance over time"
-          description="Composite score across the three highest-volume teams."
+          title="Logic Score over time"
+          description="Composite score across Legal, Consulting and IT Services practices."
         >
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
@@ -135,7 +135,8 @@ export default function PerformancePage() {
                 <Legend wrapperStyle={{ fontSize: 12 }} />
                 <Line
                   type="monotone"
-                  dataKey="finance"
+                  dataKey="legal"
+                  name="Legal"
                   stroke={chartPalette.indigo}
                   strokeWidth={2.5}
                   dot={{ r: 3 }}
@@ -143,7 +144,8 @@ export default function PerformancePage() {
                 />
                 <Line
                   type="monotone"
-                  dataKey="sales"
+                  dataKey="consulting"
+                  name="Consulting"
                   stroke={chartPalette.amber}
                   strokeWidth={2.5}
                   dot={{ r: 3 }}
@@ -151,7 +153,8 @@ export default function PerformancePage() {
                 />
                 <Line
                   type="monotone"
-                  dataKey="support"
+                  dataKey="itServices"
+                  name="IT Services"
                   stroke={chartPalette.emerald}
                   strokeWidth={2.5}
                   dot={{ r: 3 }}
@@ -179,7 +182,7 @@ export default function PerformancePage() {
                   <th className="px-4 py-3 text-left font-medium">#</th>
                   <th className="px-4 py-3 text-left font-medium">Name</th>
                   <th className="px-4 py-3 text-left font-medium">Team</th>
-                  <th className="px-4 py-3 text-left font-medium">Workflows</th>
+                  <th className="px-4 py-3 text-left font-medium">DNA owned</th>
                   <th className="px-4 py-3 text-left font-medium">Score</th>
                   <th className="px-4 py-3 text-left font-medium">Trend</th>
                 </tr>

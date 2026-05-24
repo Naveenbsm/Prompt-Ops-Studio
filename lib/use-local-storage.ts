@@ -65,4 +65,7 @@ export const storageKeys = {
   integrations: "integrations",
   reports: "reports",
   profile: "profile",
+  forensics: "forensics",
+  community: "community",
+  plan: "plan",
 } as const;
