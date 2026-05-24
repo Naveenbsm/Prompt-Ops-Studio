@@ -1,6 +1,7 @@
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkline } from "./sparkline";
+import { chartPalette } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 interface MetricCardProps {
@@ -12,19 +13,19 @@ interface MetricCardProps {
   color?: string;
 }
 
-export function MetricCard({ label, value, delta, deltaLabel, sparkSeed, color = "#6366f1" }: MetricCardProps) {
+export function MetricCard({ label, value, delta, deltaLabel, sparkSeed, color = chartPalette.indigo }: MetricCardProps) {
   const positive = delta >= 0;
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow">
+    <Card className="overflow-hidden border-border/70 hover:shadow-[0_8px_24px_-12px_rgba(10,37,64,0.12)] hover:border-border transition-all">
       <CardContent className="p-5">
         <div className="flex items-start justify-between">
-          <p className="text-sm font-medium text-muted-foreground">{label}</p>
+          <p className="text-[13px] font-medium text-muted-foreground">{label}</p>
           <span
             className={cn(
               "inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-medium",
               positive
-                ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300"
-                : "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300"
+                ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300"
+                : "bg-rose-50 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300"
             )}
           >
             {positive ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}

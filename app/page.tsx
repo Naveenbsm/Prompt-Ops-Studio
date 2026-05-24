@@ -10,8 +10,6 @@ import { DeltaPill } from "@/components/dashboard/delta-pill";
 import { Badge } from "@/components/ui/badge";
 import { metrics, improvementAreas } from "@/lib/mock-data";
 
-const colors = ["#6366f1", "#8b5cf6", "#d946ef", "#10b981"];
-
 export default function OverviewPage() {
   return (
     <PageSkeleton>
@@ -31,7 +29,7 @@ export default function OverviewPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {metrics.map((m, i) => (
+          {metrics.map((m) => (
             <MetricCard
               key={m.key}
               label={m.label}
@@ -39,7 +37,7 @@ export default function OverviewPage() {
               delta={m.delta}
               deltaLabel={m.deltaLabel}
               sparkSeed={m.sparkSeed}
-              color={colors[i % colors.length]}
+              color={m.accent}
             />
           ))}
         </div>

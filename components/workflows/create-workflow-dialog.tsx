@@ -22,27 +22,46 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { departments } from "@/lib/mock-data";
+import { departments, type Workflow } from "@/lib/mock-data";
 
 const steps = ["Details", "Trigger", "Review"] as const;
 
-export function CreateWorkflowDialog() {
+interface CreateWorkflowDialogProps {
+  onCreate?: (workflow: Workflow) => void;
+}
+
+export function CreateWorkflowDialog({ onCreate }: CreateWorkflowDialogProps) {
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState(0);
   const [name, setName] = React.useState("");
   const [dept, setDept] = React.useState(departments[0]);
   const [trigger, setTrigger] = React.useState("schedule");
+  const [description, setDescription] = React.useState("");
 
   const reset = () => {
     setStep(0);
     setName("");
     setDept(departments[0]);
     setTrigger("schedule");
+    setDescription("");
   };
 
   const submit = () => {
+    const finalName = name.trim() || "Untitled workflow";
+    const wf: Workflow = {
+      id: `wf-${Date.now().toString(36)}`,
+      name: finalName,
+      department: dept,
+      status: "Draft",
+      efficiency: Math.floor(55 + Math.random() * 20),
+      lastRun: new Date().toISOString(),
+      runs: 0,
+      owner: "Alex Rivera",
+      description: description.trim() || `Auto-generated ${trigger} workflow.`,
+    };
+    onCreate?.(wf);
     setOpen(false);
-    toast.success(`Workflow "${name || "Untitled"}" created`, {
+    toast.success(`Workflow "${finalName}" created`, {
       description: "It is now in draft. You can publish it from the workflow detail panel.",
     });
     setTimeout(reset, 250);
@@ -106,6 +125,15 @@ export function CreateWorkflowDialog() {
                 placeholder="e.g. Customer Refund Automation"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="wf-desc">Description</Label>
+              <Input
+                id="wf-desc"
+                placeholder="What does this workflow do?"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
               />
             </div>
             <div className="space-y-1.5">

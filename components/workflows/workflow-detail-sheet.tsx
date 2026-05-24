@@ -11,7 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "./status-badge";
-import { recentRuns, runEfficiency, type Workflow } from "@/lib/mock-data";
+import { recentRuns, runEfficiency, chartPalette, type Workflow } from "@/lib/mock-data";
 import { relativeTime } from "@/lib/utils";
 import { CheckCircle2, XCircle, Play, Pause } from "lucide-react";
 
@@ -19,9 +19,10 @@ interface Props {
   workflow: Workflow | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onToggleStatus?: (id: string) => void;
 }
 
-export function WorkflowDetailSheet({ workflow, open, onOpenChange }: Props) {
+export function WorkflowDetailSheet({ workflow, open, onOpenChange, onToggleStatus }: Props) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full overflow-y-auto sm:max-w-xl">
@@ -67,8 +68,8 @@ export function WorkflowDetailSheet({ workflow, open, onOpenChange }: Props) {
                     <AreaChart data={runEfficiency(workflow.runs % 10)}>
                       <defs>
                         <linearGradient id={`wf-${workflow.id}`} x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.5} />
-                          <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
+                          <stop offset="0%" stopColor={chartPalette.indigo} stopOpacity={0.45} />
+                          <stop offset="100%" stopColor={chartPalette.indigo} stopOpacity={0} />
                         </linearGradient>
                       </defs>
                       <XAxis dataKey="day" hide />
@@ -77,7 +78,7 @@ export function WorkflowDetailSheet({ workflow, open, onOpenChange }: Props) {
                       <Area
                         type="monotone"
                         dataKey="value"
-                        stroke="#8b5cf6"
+                        stroke={chartPalette.indigo}
                         strokeWidth={2}
                         fill={`url(#wf-${workflow.id})`}
                         isAnimationActive={false}
@@ -110,7 +111,7 @@ export function WorkflowDetailSheet({ workflow, open, onOpenChange }: Props) {
               </div>
 
               <div className="flex items-center gap-2">
-                <Button>
+                <Button onClick={() => onToggleStatus?.(workflow.id)}>
                   {workflow.status === "Paused" ? (
                     <>
                       <Play className="h-4 w-4" /> Resume

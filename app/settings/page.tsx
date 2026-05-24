@@ -26,9 +26,28 @@ import {
   invoices,
   notificationSettings as initialNotifications,
   planUsage,
+  type Integration,
+  type NotificationSetting,
 } from "@/lib/mock-data";
+import { useLocalStorage, storageKeys } from "@/lib/use-local-storage";
 import { formatCurrency, formatDate, initials } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+
+interface ProfileState {
+  name: string;
+  email: string;
+  role: string;
+  team: string;
+  avatar: string | null;
+}
+
+const defaultProfile: ProfileState = {
+  name: currentUser.name,
+  email: currentUser.email,
+  role: currentUser.role,
+  team: currentUser.team,
+  avatar: null,
+};
 
 export default function SettingsPage() {
   return (
@@ -68,32 +87,44 @@ export default function SettingsPage() {
 }
 
 function ProfileTab() {
-  const [name, setName] = React.useState(currentUser.name);
-  const [email, setEmail] = React.useState(currentUser.email);
-  const [role, setRole] = React.useState(currentUser.role);
-  const [avatar, setAvatar] = React.useState<string | null>(null);
+  const [profile, setProfile] = useLocalStorage<ProfileState>(
+    storageKeys.profile,
+    defaultProfile
+  );
+  const [draft, setDraft] = React.useState<ProfileState>(profile);
   const fileInput = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    setDraft(profile);
+  }, [profile]);
 
   const onPick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => setAvatar(reader.result as string);
+    reader.onload = () => setDraft((d) => ({ ...d, avatar: reader.result as string }));
     reader.readAsDataURL(file);
   };
+
+  const dirty =
+    draft.name !== profile.name ||
+    draft.email !== profile.email ||
+    draft.role !== profile.role ||
+    draft.team !== profile.team ||
+    draft.avatar !== profile.avatar;
 
   return (
     <Card className="p-6">
       <div className="flex items-center gap-5">
         <div className="relative">
           <Avatar className="h-20 w-20 text-base">
-            {avatar ? <AvatarImage src={avatar} alt={name} /> : null}
-            <AvatarFallback className="text-base">{initials(name)}</AvatarFallback>
+            {draft.avatar ? <AvatarImage src={draft.avatar} alt={draft.name} /> : null}
+            <AvatarFallback className="text-base">{initials(draft.name || "AR")}</AvatarFallback>
           </Avatar>
           <button
             type="button"
             onClick={() => fileInput.current?.click()}
-            className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-md hover:brightness-110"
+            className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-foreground text-background shadow-md hover:opacity-90"
             aria-label="Upload avatar"
           >
             <Camera className="h-3.5 w-3.5" />
@@ -101,27 +132,43 @@ function ProfileTab() {
           <input ref={fileInput} type="file" accept="image/*" hidden onChange={onPick} />
         </div>
         <div>
-          <p className="text-base font-semibold">{name}</p>
-          <p className="text-sm text-muted-foreground">{role}</p>
+          <p className="text-base font-semibold">{draft.name || "Unnamed"}</p>
+          <p className="text-sm text-muted-foreground">{draft.role}</p>
         </div>
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="space-y-1.5">
           <Label htmlFor="name">Full name</Label>
-          <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
+          <Input
+            id="name"
+            value={draft.name}
+            onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
+          />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            id="email"
+            type="email"
+            value={draft.email}
+            onChange={(e) => setDraft((d) => ({ ...d, email: e.target.value }))}
+          />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="role">Role</Label>
-          <Input id="role" value={role} onChange={(e) => setRole(e.target.value)} />
+          <Input
+            id="role"
+            value={draft.role}
+            onChange={(e) => setDraft((d) => ({ ...d, role: e.target.value }))}
+          />
         </div>
         <div className="space-y-1.5">
           <Label>Team</Label>
-          <Select defaultValue={currentUser.team}>
+          <Select
+            value={draft.team}
+            onValueChange={(v) => setDraft((d) => ({ ...d, team: v }))}
+          >
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -137,15 +184,28 @@ function ProfileTab() {
       </div>
 
       <div className="mt-6 flex justify-end gap-2">
-        <Button variant="ghost">Cancel</Button>
-        <Button onClick={() => toast.success("Profile saved")}>Save changes</Button>
+        <Button variant="ghost" onClick={() => setDraft(profile)} disabled={!dirty}>
+          Cancel
+        </Button>
+        <Button
+          disabled={!dirty}
+          onClick={() => {
+            setProfile(draft);
+            toast.success("Profile saved");
+          }}
+        >
+          Save changes
+        </Button>
       </div>
     </Card>
   );
 }
 
 function NotificationsTab() {
-  const [items, setItems] = React.useState(initialNotifications);
+  const [items, setItems] = useLocalStorage<NotificationSetting[]>(
+    storageKeys.notifications,
+    initialNotifications
+  );
   const grouped = {
     email: items.filter((i) => i.category === "email"),
     push: items.filter((i) => i.category === "push"),
@@ -180,7 +240,10 @@ function NotificationsTab() {
 }
 
 function IntegrationsTab() {
-  const [items, setItems] = React.useState(initialIntegrations);
+  const [items, setItems] = useLocalStorage<Integration[]>(
+    storageKeys.integrations,
+    initialIntegrations
+  );
   const toggle = (id: string) =>
     setItems((prev) =>
       prev.map((it) => {
@@ -327,6 +390,31 @@ function BillingTab() {
             </tbody>
           </table>
         </div>
+      </Card>
+
+      <Card className="border-rose-200 bg-rose-50/30 p-6 dark:border-rose-500/20 dark:bg-rose-500/5">
+        <p className="text-sm font-semibold">Reset demo data</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Restore workflows, automations, integrations, and notifications to their original sample values.
+        </p>
+        <Button
+          variant="outline"
+          size="sm"
+          className="mt-3"
+          onClick={() => {
+            try {
+              Object.keys(window.localStorage)
+                .filter((k) => k.startsWith("promptops:v1:"))
+                .forEach((k) => window.localStorage.removeItem(k));
+              toast.success("Demo data reset", { description: "Refreshing..." });
+              setTimeout(() => window.location.reload(), 600);
+            } catch {
+              toast.error("Couldn't reset — your browser blocked localStorage");
+            }
+          }}
+        >
+          Reset to sample data
+        </Button>
       </Card>
     </div>
   );

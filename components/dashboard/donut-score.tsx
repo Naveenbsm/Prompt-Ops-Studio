@@ -1,6 +1,7 @@
 "use client";
 
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
+import { chartPalette } from "@/lib/mock-data";
 
 interface DonutScoreProps {
   value: number;
@@ -19,9 +20,8 @@ export function DonutScore({ value, label = "Excellent" }: DonutScoreProps) {
         <PieChart>
           <defs>
             <linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#6366f1" />
-              <stop offset="50%" stopColor="#8b5cf6" />
-              <stop offset="100%" stopColor="#d946ef" />
+              <stop offset="0%" stopColor={chartPalette.indigo} />
+              <stop offset="100%" stopColor={chartPalette.navy} />
             </linearGradient>
           </defs>
           <Pie

@@ -75,6 +75,32 @@ export const sparkData = (seed: number) =>
     y: Math.round(40 + Math.sin(i * 0.6 + seed) * 14 + i * (seed % 3) * 1.4 + (seed * 3) % 10),
   }));
 
+/**
+ * Centralized chart palette — Stripe-inspired:
+ * primary indigo + complementary navy / sky / coral / emerald / amber / slate.
+ * Use these rather than ad-hoc hex codes so the dashboard reads as one product.
+ */
+export const chartPalette = {
+  indigo: "#635BFF",
+  indigoDeep: "#4F46E5",
+  navy: "#0A2540",
+  sky: "#0EA5E9",
+  emerald: "#10B981",
+  amber: "#F59E0B",
+  coral: "#FB7185",
+  slate: "#64748B",
+  cloud: "#CBD5E1",
+};
+
+export const chartSeries = [
+  chartPalette.indigo,
+  chartPalette.sky,
+  chartPalette.emerald,
+  chartPalette.amber,
+  chartPalette.coral,
+  chartPalette.slate,
+];
+
 export const metrics = [
   {
     key: "workflows",
@@ -82,7 +108,7 @@ export const metrics = [
     value: "248",
     delta: 27,
     deltaLabel: "+27% vs last month",
-    accent: "from-indigo-500 to-violet-500",
+    accent: chartPalette.indigo,
     sparkSeed: 1,
   },
   {
@@ -91,7 +117,7 @@ export const metrics = [
     value: "34.2%",
     delta: 8.6,
     deltaLabel: "+8.6% vs last month",
-    accent: "from-violet-500 to-fuchsia-500",
+    accent: chartPalette.sky,
     sparkSeed: 2,
   },
   {
@@ -100,7 +126,7 @@ export const metrics = [
     value: "1,256 hrs",
     delta: 33.1,
     deltaLabel: "+312 hrs",
-    accent: "from-fuchsia-500 to-pink-500",
+    accent: chartPalette.amber,
     sparkSeed: 3,
   },
   {
@@ -109,7 +135,7 @@ export const metrics = [
     value: "$2.48M",
     delta: 18.4,
     deltaLabel: "+18.4% vs last month",
-    accent: "from-emerald-500 to-teal-500",
+    accent: chartPalette.emerald,
     sparkSeed: 4,
   },
 ];
@@ -181,11 +207,11 @@ export const reports: ReportItem[] = [
 ];
 
 export const integrations: Integration[] = [
-  { id: "slack", name: "Slack", description: "Send messages, alerts, and approvals to channels.", category: "Communication", connected: true, color: "bg-purple-500" },
+  { id: "slack", name: "Slack", description: "Send messages, alerts, and approvals to channels.", category: "Communication", connected: true, color: "bg-[#4A154B]" },
   { id: "gmail", name: "Gmail", description: "Trigger workflows from incoming email.", category: "Email", connected: true, color: "bg-rose-500" },
   { id: "zapier", name: "Zapier", description: "Connect to 5,000+ apps with a click.", category: "Automation", connected: false, color: "bg-orange-500" },
   { id: "salesforce", name: "Salesforce", description: "Sync CRM records bidirectionally.", category: "CRM", connected: true, color: "bg-sky-500" },
-  { id: "notion", name: "Notion", description: "Auto-create pages from triggers.", category: "Docs", connected: false, color: "bg-neutral-700" },
+  { id: "notion", name: "Notion", description: "Auto-create pages from triggers.", category: "Docs", connected: false, color: "bg-neutral-800" },
   { id: "hubspot", name: "HubSpot", description: "Push lead scores and trigger sequences.", category: "CRM", connected: false, color: "bg-amber-500" },
 ];
 
@@ -247,12 +273,12 @@ export const efficiencyTrend90d = Array.from({ length: 12 }, (_, i) => ({
 }));
 
 export const departmentDistribution = [
-  { name: "Finance", value: 38, color: "#6366f1" },
-  { name: "Support", value: 32, color: "#8b5cf6" },
-  { name: "Sales", value: 24, color: "#a855f7" },
-  { name: "Customer Success", value: 18, color: "#ec4899" },
-  { name: "Operations", value: 14, color: "#f43f5e" },
-  { name: "Other", value: 22, color: "#94a3b8" },
+  { name: "Finance", value: 38, color: chartPalette.indigo },
+  { name: "Support", value: 32, color: chartPalette.sky },
+  { name: "Sales", value: 24, color: chartPalette.emerald },
+  { name: "Customer Success", value: 18, color: chartPalette.amber },
+  { name: "Operations", value: 14, color: chartPalette.coral },
+  { name: "Other", value: 22, color: chartPalette.slate },
 ];
 
 export const weekOverWeek = [

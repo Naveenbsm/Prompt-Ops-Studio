@@ -19,10 +19,10 @@ import { SectionCard } from "@/components/dashboard/section-card";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { performanceByTeam, performanceOverTime, teamPerformers } from "@/lib/mock-data";
+import { performanceByTeam, performanceOverTime, teamPerformers, chartPalette, chartSeries } from "@/lib/mock-data";
 import { cn, initials } from "@/lib/utils";
 
-const palette = ["#6366f1", "#8b5cf6", "#a855f7", "#d946ef", "#ec4899", "#f43f5e", "#22c55e", "#0ea5e9"];
+const palette = chartSeries;
 
 export default function PerformancePage() {
   const top3 = teamPerformers.slice(0, 3);
@@ -136,7 +136,7 @@ export default function PerformancePage() {
                 <Line
                   type="monotone"
                   dataKey="finance"
-                  stroke="#6366f1"
+                  stroke={chartPalette.indigo}
                   strokeWidth={2.5}
                   dot={{ r: 3 }}
                   isAnimationActive={false}
@@ -144,7 +144,7 @@ export default function PerformancePage() {
                 <Line
                   type="monotone"
                   dataKey="sales"
-                  stroke="#d946ef"
+                  stroke={chartPalette.amber}
                   strokeWidth={2.5}
                   dot={{ r: 3 }}
                   isAnimationActive={false}
@@ -152,7 +152,7 @@ export default function PerformancePage() {
                 <Line
                   type="monotone"
                   dataKey="support"
-                  stroke="#10b981"
+                  stroke={chartPalette.emerald}
                   strokeWidth={2.5}
                   dot={{ r: 3 }}
                   isAnimationActive={false}

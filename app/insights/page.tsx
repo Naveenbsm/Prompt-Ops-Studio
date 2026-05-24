@@ -29,6 +29,7 @@ import {
   departmentDistribution,
   weekOverWeek,
   keyInsights,
+  chartPalette,
 } from "@/lib/mock-data";
 
 const ranges = [
@@ -88,8 +89,8 @@ export default function InsightsPage() {
                 <AreaChart data={active.data} margin={{ top: 6, right: 8, bottom: 0, left: -22 }}>
                   <defs>
                     <linearGradient id="eff" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#6366f1" stopOpacity={0.5} />
-                      <stop offset="100%" stopColor="#6366f1" stopOpacity={0} />
+                      <stop offset="0%" stopColor={chartPalette.indigo} stopOpacity={0.45} />
+                      <stop offset="100%" stopColor={chartPalette.indigo} stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -99,7 +100,7 @@ export default function InsightsPage() {
                   <Area
                     type="monotone"
                     dataKey="baseline"
-                    stroke="#94a3b8"
+                    stroke={chartPalette.slate}
                     strokeDasharray="4 4"
                     fill="transparent"
                     isAnimationActive={false}
@@ -107,7 +108,7 @@ export default function InsightsPage() {
                   <Area
                     type="monotone"
                     dataKey="efficiency"
-                    stroke="#6366f1"
+                    stroke={chartPalette.indigo}
                     strokeWidth={2.5}
                     fill="url(#eff)"
                     isAnimationActive={false}
@@ -165,8 +166,8 @@ export default function InsightsPage() {
                 <YAxis axisLine={false} tickLine={false} fontSize={11} />
                 <Tooltip />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Bar dataKey="lastWeek" fill="#c4b5fd" radius={[6, 6, 0, 0]} name="Last week" />
-                <Bar dataKey="thisWeek" fill="#6366f1" radius={[6, 6, 0, 0]} name="This week" />
+                <Bar dataKey="lastWeek" fill={chartPalette.cloud} radius={[6, 6, 0, 0]} name="Last week" />
+                <Bar dataKey="thisWeek" fill={chartPalette.indigo} radius={[6, 6, 0, 0]} name="This week" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -185,10 +186,10 @@ export default function InsightsPage() {
                     className={cn(
                       "flex h-9 w-9 items-center justify-center rounded-lg",
                       k.tone === "good"
-                        ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300"
+                        ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300"
                         : k.tone === "warn"
-                        ? "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
-                        : "bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300"
+                        ? "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
+                        : "bg-indigo-50 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300"
                     )}
                   >
                     <Icon className="h-4 w-4" />

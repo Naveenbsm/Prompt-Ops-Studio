@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { toast } from "sonner";
 import { Search, MoreHorizontal, Play, Pause, Trash2, Edit3 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -34,20 +35,29 @@ import { CreateWorkflowDialog } from "@/components/workflows/create-workflow-dia
 import { WorkflowDetailSheet } from "@/components/workflows/workflow-detail-sheet";
 import {
   departments,
-  workflows,
+  workflows as initialWorkflows,
   type Workflow,
   type WorkflowStatus,
 } from "@/lib/mock-data";
+import { useLocalStorage, storageKeys } from "@/lib/use-local-storage";
 import { relativeTime } from "@/lib/utils";
 
 const statuses: ("All" | WorkflowStatus)[] = ["All", "Active", "Paused", "Draft"];
 
 export default function WorkflowsPage() {
+  const [workflows, setWorkflows] = useLocalStorage<Workflow[]>(
+    storageKeys.workflows,
+    initialWorkflows
+  );
   const [query, setQuery] = React.useState("");
   const [status, setStatus] = React.useState<"All" | WorkflowStatus>("All");
   const [dept, setDept] = React.useState<string>("All");
-  const [selected, setSelected] = React.useState<Workflow | null>(null);
+  const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [open, setOpen] = React.useState(false);
+
+  const selected = selectedId
+    ? workflows.find((w) => w.id === selectedId) ?? null
+    : null;
 
   const filtered = workflows.filter((w) => {
     const q = query.toLowerCase().trim();
@@ -56,6 +66,35 @@ export default function WorkflowsPage() {
     if (dept !== "All" && w.department !== dept) return false;
     return true;
   });
+
+  const addWorkflow = (wf: Workflow) => {
+    setWorkflows((prev) => [wf, ...prev]);
+  };
+
+  const toggleStatus = (id: string) => {
+    setWorkflows((prev) =>
+      prev.map((w) => {
+        if (w.id !== id) return w;
+        const next: WorkflowStatus = w.status === "Active" ? "Paused" : "Active";
+        toast.success(
+          next === "Active" ? `${w.name} resumed` : `${w.name} paused`
+        );
+        return { ...w, status: next };
+      })
+    );
+  };
+
+  const deleteWorkflow = (id: string) => {
+    setWorkflows((prev) => {
+      const removed = prev.find((w) => w.id === id);
+      if (removed) toast.success(`Deleted "${removed.name}"`);
+      return prev.filter((w) => w.id !== id);
+    });
+    if (selectedId === id) {
+      setOpen(false);
+      setSelectedId(null);
+    }
+  };
 
   return (
     <PageSkeleton>
@@ -67,7 +106,7 @@ export default function WorkflowsPage() {
               {filtered.length} of {workflows.length} workflows
             </p>
           </div>
-          <CreateWorkflowDialog />
+          <CreateWorkflowDialog onCreate={addWorkflow} />
         </div>
 
         <Card className="overflow-hidden">
@@ -147,7 +186,7 @@ export default function WorkflowsPage() {
                     key={w.id}
                     className="cursor-pointer"
                     onClick={() => {
-                      setSelected(w);
+                      setSelectedId(w.id);
                       setOpen(true);
                     }}
                   >
@@ -190,20 +229,28 @@ export default function WorkflowsPage() {
                           align="end"
                           onClick={(e) => e.stopPropagation()}
                         >
-                          <DropdownMenuItem>
+                          <DropdownMenuItem
+                            onClick={() => {
+                              setSelectedId(w.id);
+                              setOpen(true);
+                            }}
+                          >
                             <Edit3 className="h-4 w-4" /> Edit
                           </DropdownMenuItem>
                           {w.status === "Paused" ? (
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => toggleStatus(w.id)}>
                               <Play className="h-4 w-4" /> Resume
                             </DropdownMenuItem>
                           ) : (
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => toggleStatus(w.id)}>
                               <Pause className="h-4 w-4" /> Pause
                             </DropdownMenuItem>
                           )}
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-rose-600 focus:text-rose-600">
+                          <DropdownMenuItem
+                            className="text-rose-600 focus:text-rose-600"
+                            onClick={() => deleteWorkflow(w.id)}
+                          >
                             <Trash2 className="h-4 w-4" /> Delete
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -216,7 +263,12 @@ export default function WorkflowsPage() {
           )}
         </Card>
       </div>
-      <WorkflowDetailSheet workflow={selected} open={open} onOpenChange={setOpen} />
+      <WorkflowDetailSheet
+        workflow={selected}
+        open={open}
+        onOpenChange={setOpen}
+        onToggleStatus={toggleStatus}
+      />
     </PageSkeleton>
   );
 }

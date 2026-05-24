@@ -16,6 +16,7 @@ import {
   AlertTriangle,
   FileSignature,
   Plus,
+  Trash2,
   type LucideIcon,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -42,7 +43,8 @@ import {
 import { PageSkeleton } from "@/components/dashboard/page-skeleton";
 import { EmptyState } from "@/components/dashboard/empty-state";
 import { StatusBadge } from "@/components/workflows/status-badge";
-import { automations, type Automation, type WorkflowStatus } from "@/lib/mock-data";
+import { automations as initialAutomations, type Automation, type WorkflowStatus } from "@/lib/mock-data";
+import { useLocalStorage, storageKeys } from "@/lib/use-local-storage";
 import { cn } from "@/lib/utils";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -64,7 +66,10 @@ const filters: ("All" | WorkflowStatus)[] = ["All", "Active", "Paused", "Draft"]
 
 export default function AutomationPage() {
   const [filter, setFilter] = React.useState<"All" | WorkflowStatus>("All");
-  const [items, setItems] = React.useState<Automation[]>(automations);
+  const [items, setItems] = useLocalStorage<Automation[]>(
+    storageKeys.automations,
+    initialAutomations
+  );
 
   const visible = items.filter((a) => filter === "All" || a.status === filter);
 
@@ -81,6 +86,16 @@ export default function AutomationPage() {
       )
     );
 
+  const remove = (id: string) =>
+    setItems((prev) => {
+      const removed = prev.find((a) => a.id === id);
+      if (removed) toast.success(`Deleted "${removed.name}"`);
+      return prev.filter((a) => a.id !== id);
+    });
+
+  const add = (automation: Automation) =>
+    setItems((prev) => [automation, ...prev]);
+
   return (
     <PageSkeleton>
       <div className="space-y-5">
@@ -91,7 +106,7 @@ export default function AutomationPage() {
               Build and manage rule-based automations across your tools.
             </p>
           </div>
-          <NewAutomationDialog />
+          <NewAutomationDialog onCreate={add} />
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -102,7 +117,7 @@ export default function AutomationPage() {
               className={cn(
                 "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors",
                 filter === f
-                  ? "border-primary bg-primary text-primary-foreground"
+                  ? "border-foreground bg-foreground text-background"
                   : "border-border bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
               )}
             >
@@ -121,10 +136,10 @@ export default function AutomationPage() {
             {visible.map((a) => {
               const Icon = iconMap[a.icon] ?? Bell;
               return (
-                <Card key={a.id} className="p-5 transition-shadow hover:shadow-md">
+                <Card key={a.id} className="p-5 transition-shadow hover:shadow-[0_8px_24px_-12px_rgba(10,37,64,0.12)]">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/15 to-purple-500/15 text-primary">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-primary ring-1 ring-border">
                         <Icon className="h-5 w-5" />
                       </div>
                       <div>
@@ -132,7 +147,17 @@ export default function AutomationPage() {
                         <p className="text-xs text-muted-foreground">{a.category}</p>
                       </div>
                     </div>
-                    <Switch checked={a.enabled} onCheckedChange={() => toggle(a.id)} />
+                    <div className="flex items-center gap-1.5">
+                      <Switch checked={a.enabled} onCheckedChange={() => toggle(a.id)} />
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-7 w-7 text-muted-foreground hover:text-rose-600"
+                        onClick={() => remove(a.id)}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
                   </div>
                   <div className="mt-4 space-y-1 rounded-lg border border-border bg-secondary/40 p-3 text-xs">
                     <div className="flex gap-1">
@@ -160,10 +185,32 @@ export default function AutomationPage() {
   );
 }
 
-function NewAutomationDialog() {
+function NewAutomationDialog({ onCreate }: { onCreate: (a: Automation) => void }) {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [trigger, setTrigger] = React.useState("schedule");
+  const [action, setAction] = React.useState("slack");
+  const [category, setCategory] = React.useState("Productivity");
+
+  const triggerLabel: Record<string, string> = {
+    schedule: "On schedule",
+    webhook: "Webhook received",
+    email: "New email matches",
+    event: "App event",
+  };
+  const actionLabel: Record<string, string> = {
+    slack: "Send Slack message",
+    email: "Send email",
+    "create-row": "Create row in Sheets",
+    webhook: "Call webhook",
+  };
+
+  const reset = () => {
+    setName("");
+    setTrigger("schedule");
+    setAction("slack");
+    setCategory("Productivity");
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -176,7 +223,7 @@ function NewAutomationDialog() {
         <DialogHeader>
           <DialogTitle>Create a new automation</DialogTitle>
           <DialogDescription>
-            Pick a trigger and we'll suggest an action template.
+            Pick a trigger and we&apos;ll suggest an action template.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-3">
@@ -188,6 +235,22 @@ function NewAutomationDialog() {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+          </div>
+          <div className="space-y-1.5">
+            <Label>Category</Label>
+            <Select value={category} onValueChange={setCategory}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Sales">Sales</SelectItem>
+                <SelectItem value="Finance">Finance</SelectItem>
+                <SelectItem value="Engineering">Engineering</SelectItem>
+                <SelectItem value="Support">Support</SelectItem>
+                <SelectItem value="Marketing">Marketing</SelectItem>
+                <SelectItem value="Productivity">Productivity</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
           <div className="space-y-1.5">
             <Label>Trigger</Label>
@@ -205,7 +268,7 @@ function NewAutomationDialog() {
           </div>
           <div className="space-y-1.5">
             <Label>Action</Label>
-            <Select defaultValue="slack">
+            <Select value={action} onValueChange={setAction}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -224,12 +287,22 @@ function NewAutomationDialog() {
           </Button>
           <Button
             onClick={() => {
+              const finalName = name.trim() || "Untitled automation";
+              const a: Automation = {
+                id: `auto-${Date.now().toString(36)}`,
+                name: finalName,
+                icon: "Bell",
+                trigger: triggerLabel[trigger],
+                action: actionLabel[action],
+                runs: 0,
+                status: "Draft",
+                category,
+                enabled: false,
+              };
+              onCreate(a);
               setOpen(false);
-              toast.success(`Automation "${name || "Untitled"}" created`);
-              setTimeout(() => {
-                setName("");
-                setTrigger("schedule");
-              }, 250);
+              toast.success(`Automation "${finalName}" created`);
+              setTimeout(reset, 250);
             }}
           >
             Create

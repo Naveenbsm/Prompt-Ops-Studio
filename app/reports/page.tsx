@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { toast } from "sonner";
-import { Download, FileText, Plus } from "lucide-react";
+import { Download, FileText, Plus, Trash2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PageSkeleton } from "@/components/dashboard/page-skeleton";
-import { reports } from "@/lib/mock-data";
+import { reports as initialReports, type ReportItem } from "@/lib/mock-data";
+import { useLocalStorage, storageKeys } from "@/lib/use-local-storage";
 import { formatDate } from "@/lib/utils";
 
 const typeVariant: Record<string, "default" | "success" | "warning" | "neutral"> = {
@@ -36,6 +37,19 @@ const typeVariant: Record<string, "default" | "success" | "warning" | "neutral">
 };
 
 export default function ReportsPage() {
+  const [reports, setReports] = useLocalStorage<ReportItem[]>(
+    storageKeys.reports,
+    initialReports
+  );
+
+  const addReport = (r: ReportItem) => setReports((prev) => [r, ...prev]);
+  const removeReport = (id: string) =>
+    setReports((prev) => {
+      const removed = prev.find((r) => r.id === id);
+      if (removed) toast.success(`Deleted "${removed.title}"`);
+      return prev.filter((r) => r.id !== id);
+    });
+
   return (
     <PageSkeleton>
       <div className="space-y-5">
@@ -46,14 +60,17 @@ export default function ReportsPage() {
               Saved reports and exports across the workspace.
             </p>
           </div>
-          <GenerateReportDialog />
+          <GenerateReportDialog onCreate={addReport} />
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {reports.map((r) => (
-            <Card key={r.id} className="p-5 transition-shadow hover:shadow-md">
+            <Card
+              key={r.id}
+              className="p-5 transition-shadow hover:shadow-[0_8px_24px_-12px_rgba(10,37,64,0.12)]"
+            >
               <div className="flex items-start gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/15 to-purple-500/15 text-primary">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-primary ring-1 ring-border">
                   <FileText className="h-5 w-5" />
                 </div>
                 <div className="min-w-0 flex-1">
@@ -67,8 +84,13 @@ export default function ReportsPage() {
                 <span>{r.size}</span>
               </div>
               <div className="mt-4 flex items-center justify-between">
-                <Button variant="ghost" size="sm">
-                  Preview
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground hover:text-rose-600"
+                  onClick={() => removeReport(r.id)}
+                >
+                  <Trash2 className="h-3.5 w-3.5" /> Delete
                 </Button>
                 <Button
                   size="sm"
@@ -89,9 +111,19 @@ export default function ReportsPage() {
   );
 }
 
-function GenerateReportDialog() {
+function GenerateReportDialog({ onCreate }: { onCreate: (r: ReportItem) => void }) {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
+  const [type, setType] = React.useState<ReportItem["type"]>("Performance");
+  const [range, setRange] = React.useState("30");
+  const [format, setFormat] = React.useState("pdf");
+
+  const reset = () => {
+    setName("");
+    setType("Performance");
+    setRange("30");
+    setFormat("pdf");
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -120,7 +152,7 @@ function GenerateReportDialog() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="space-y-1.5">
               <Label>Type</Label>
-              <Select defaultValue="Performance">
+              <Select value={type} onValueChange={(v) => setType(v as ReportItem["type"])}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -135,7 +167,7 @@ function GenerateReportDialog() {
             </div>
             <div className="space-y-1.5">
               <Label>Date range</Label>
-              <Select defaultValue="30">
+              <Select value={range} onValueChange={setRange}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -150,7 +182,7 @@ function GenerateReportDialog() {
           </div>
           <div className="space-y-1.5">
             <Label>Format</Label>
-            <Select defaultValue="pdf">
+            <Select value={format} onValueChange={setFormat}>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -168,11 +200,20 @@ function GenerateReportDialog() {
           </Button>
           <Button
             onClick={() => {
+              const title = name.trim() || "Untitled report";
+              const sizeMb = (0.5 + Math.random() * 4).toFixed(1);
+              const r: ReportItem = {
+                id: `r-${Date.now().toString(36)}`,
+                title,
+                type,
+                generated: new Date().toISOString(),
+                size: `${sizeMb} MB`,
+                author: "Alex Rivera",
+              };
+              onCreate(r);
               setOpen(false);
-              toast.success("Report queued for generation", {
-                description: name || "Untitled report",
-              });
-              setTimeout(() => setName(""), 200);
+              toast.success("Report generated", { description: title });
+              setTimeout(reset, 250);
             }}
           >
             Generate

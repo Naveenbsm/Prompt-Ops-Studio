@@ -26,7 +26,7 @@ export function MobileNav() {
         <div className="flex h-16 items-center border-b border-border px-5">
           <Logo />
         </div>
-        <nav className="space-y-1 p-3">
+        <nav className="space-y-0.5 p-3">
           {navItems.map((item) => {
             const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             const Icon = item.icon;
@@ -36,13 +36,16 @@ export function MobileNav() {
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  "relative flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   active
-                    ? "gradient-primary text-white shadow-md shadow-indigo-500/20"
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    ? "bg-secondary text-foreground"
+                    : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
                 )}
               >
-                <Icon className="h-4 w-4" />
+                {active && (
+                  <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-primary" />
+                )}
+                <Icon className={cn("h-4 w-4", active ? "text-primary" : "")} />
                 <span>{item.label}</span>
               </Link>
             );

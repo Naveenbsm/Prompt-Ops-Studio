@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { automationImpactBars } from "@/lib/mock-data";
+import { automationImpactBars, chartPalette } from "@/lib/mock-data";
 
 export function ImpactChart() {
   return (
@@ -10,17 +10,17 @@ export function ImpactChart() {
         <BarChart data={automationImpactBars} barCategoryGap={14} margin={{ top: 6, right: 4, bottom: 0, left: -22 }}>
           <defs>
             <linearGradient id="impactGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#8b5cf6" />
-              <stop offset="100%" stopColor="#6366f1" />
+              <stop offset="0%" stopColor={chartPalette.indigo} />
+              <stop offset="100%" stopColor={chartPalette.indigoDeep} />
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="name" axisLine={false} tickLine={false} fontSize={11} />
           <YAxis axisLine={false} tickLine={false} fontSize={11} />
-          <Tooltip cursor={{ fill: "rgba(99,102,241,0.08)" }} />
+          <Tooltip cursor={{ fill: "rgba(99,91,255,0.08)" }} />
           <Bar dataKey="high" stackId="a" fill="url(#impactGrad)" radius={[6, 6, 0, 0]} />
-          <Bar dataKey="med" stackId="a" fill="#a78bfa" />
-          <Bar dataKey="low" stackId="a" fill="#c4b5fd" radius={[0, 0, 6, 6]} />
+          <Bar dataKey="med" stackId="a" fill="#A5A0FF" />
+          <Bar dataKey="low" stackId="a" fill="#D9D6FF" radius={[0, 0, 6, 6]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

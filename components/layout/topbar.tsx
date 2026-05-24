@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, Command } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,13 +13,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { MobileNav } from "./mobile-nav";
 import { pageTitles } from "./sidebar-nav";
 import { currentUser } from "@/lib/mock-data";
 import { initials } from "@/lib/utils";
+import { useLocalStorage, storageKeys } from "@/lib/use-local-storage";
+
+interface ProfileState {
+  name: string;
+  email: string;
+  role: string;
+  team: string;
+  avatar: string | null;
+}
 
 export function Topbar() {
   const pathname = usePathname();
@@ -28,6 +37,14 @@ export function Topbar() {
       .filter((k) => (k === "/" ? pathname === "/" : pathname.startsWith(k)))
       .sort((a, b) => b.length - a.length)[0] ?? "/";
   const title = pageTitles[matchedKey];
+
+  const [profile] = useLocalStorage<ProfileState>(storageKeys.profile, {
+    name: currentUser.name,
+    email: currentUser.email,
+    role: currentUser.role,
+    team: currentUser.team,
+    avatar: null,
+  });
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md sm:px-6">
@@ -48,8 +65,11 @@ export function Topbar() {
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search workflows, reports..."
-            className="h-9 w-56 lg:w-72 pl-9"
+            className="h-9 w-56 lg:w-72 pl-9 pr-14"
           />
+          <kbd className="pointer-events-none absolute right-2 top-1/2 hidden -translate-y-1/2 select-none items-center gap-0.5 rounded border border-border bg-secondary px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground lg:inline-flex">
+            <Command className="h-2.5 w-2.5" /> K
+          </kbd>
         </div>
         <ThemeToggle />
         <DropdownMenu>
@@ -80,7 +100,7 @@ export function Topbar() {
                         ? "bg-emerald-500"
                         : n.tone === "warn"
                         ? "bg-amber-500"
-                        : "bg-indigo-500"
+                        : "bg-primary"
                     }`}
                   />
                   <div className="text-xs">
@@ -101,16 +121,17 @@ export function Topbar() {
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 rounded-full p-0.5 hover:bg-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background">
               <Avatar>
-                <AvatarFallback>{initials(currentUser.name)}</AvatarFallback>
+                {profile.avatar ? <AvatarImage src={profile.avatar} alt={profile.name} /> : null}
+                <AvatarFallback>{initials(profile.name || "AR")}</AvatarFallback>
               </Avatar>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <div className="px-2 py-2">
-              <p className="text-sm font-medium">{currentUser.name}</p>
-              <p className="text-xs text-muted-foreground">{currentUser.email}</p>
+              <p className="text-sm font-medium">{profile.name}</p>
+              <p className="text-xs text-muted-foreground">{profile.email}</p>
               <Badge variant="default" className="mt-2 text-[10px]">
-                {currentUser.role}
+                {profile.role}
               </Badge>
             </div>
             <DropdownMenuSeparator />
