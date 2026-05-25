@@ -226,44 +226,44 @@ export const automationImpactBars = [
   { name: "Jun", high: 76, med: 34, low: 18 },
 ];
 
-// UK professional-services use cases — consulting, IT services, legal, creative.
+// Firm types: IT Services, Consulting, SaaS/Product Company, Research & Development.
 export const workflows: Workflow[] = [
-  { id: "wf-001", name: "Client Engagement Letter Draft", department: "Legal", status: "Active", efficiency: 94, lastRun: "2026-05-24T08:14:00Z", runs: 1284, owner: "Maya Patel", description: "Generate compliant engagement letters from intake form input.", dnaScore: 96, clones: 14, model: "Claude Sonnet 4.6", hallucinationRate: 1.2 },
-  { id: "wf-002", name: "Discovery Document Synthesis", department: "Legal", status: "Active", efficiency: 89, lastRun: "2026-05-24T07:32:00Z", runs: 612, owner: "Daniel Cho", description: "Summarise 200-page bundles into client-ready briefs with cited references.", dnaScore: 92, clones: 9, model: "Claude Sonnet 4.6", hallucinationRate: 2.1 },
-  { id: "wf-003", name: "Tax Advisory Note Generator", department: "Consulting", status: "Active", efficiency: 87, lastRun: "2026-05-24T06:55:00Z", runs: 4124, owner: "Sofia Reyes", description: "HMRC-aligned advisory note from client tax position.", dnaScore: 90, clones: 22, model: "GPT-4o", hallucinationRate: 1.8 },
-  { id: "wf-004", name: "Bid Response Composer", department: "Consulting", status: "Paused", efficiency: 78, lastRun: "2026-05-22T15:11:00Z", runs: 304, owner: "Liam Wright", description: "Assemble tender responses from past-win library + new RFP.", dnaScore: 81, clones: 6, model: "GPT-4o", hallucinationRate: 3.4 },
-  { id: "wf-005", name: "IT Audit Risk Brief", department: "IT Services", status: "Active", efficiency: 95, lastRun: "2026-05-24T10:02:00Z", runs: 821, owner: "Aisha Khan", description: "Convert scan output into a client-readable risk brief with remediation steps.", dnaScore: 94, clones: 11, model: "Claude Sonnet 4.6", hallucinationRate: 0.9 },
-  { id: "wf-006", name: "Contract Renewal Reminders", department: "Legal", status: "Active", efficiency: 82, lastRun: "2026-05-24T06:00:00Z", runs: 142, owner: "Noah Bennett", description: "Auto-notify owners 60 / 30 / 7 days pre-renewal with redline summary.", dnaScore: 78, clones: 4, model: "Gemini 2.5", hallucinationRate: 2.8 },
-  { id: "wf-007", name: "Brand Guidelines Generator", department: "Creative", status: "Active", efficiency: 86, lastRun: "2026-05-23T16:42:00Z", runs: 78, owner: "Priya Shah", description: "Turn brand voice notes into a full style guide.", dnaScore: 84, clones: 3, model: "Claude Sonnet 4.6", hallucinationRate: 1.4 },
-  { id: "wf-008", name: "Vendor Due Diligence Check", department: "Operations", status: "Draft", efficiency: 64, lastRun: "2026-05-19T10:30:00Z", runs: 22, owner: "Marco Bianchi", description: "Validate vendor docs and produce ICO/GDPR risk score.", dnaScore: 67, clones: 0, model: "GPT-4o", hallucinationRate: 5.2 },
-  { id: "wf-009", name: "Campaign Performance Roll-up", department: "Creative", status: "Active", efficiency: 83, lastRun: "2026-05-24T05:00:00Z", runs: 412, owner: "Hannah Lee", description: "Daily multi-channel performance brief for agency clients.", dnaScore: 80, clones: 7, model: "Gemini 2.5", hallucinationRate: 2.4 },
-  { id: "wf-010", name: "Quarterly Close Narrative", department: "Finance", status: "Paused", efficiency: 71, lastRun: "2026-04-30T22:00:00Z", runs: 4, owner: "Maya Patel", description: "Generate the board narrative around quarter-end financials.", dnaScore: 72, clones: 1, model: "Claude Sonnet 4.6", hallucinationRate: 4.0 },
-  { id: "wf-011", name: "Refund Decision Letter", department: "Customer Success", status: "Active", efficiency: 89, lastRun: "2026-05-24T09:50:00Z", runs: 932, owner: "Aisha Khan", description: "Draft refund verdict with policy citations & fraud screen.", dnaScore: 88, clones: 8, model: "GPT-4o", hallucinationRate: 1.6 },
-  { id: "wf-012", name: "ICO Evidence Collection", department: "Compliance", status: "Active", efficiency: 91, lastRun: "2026-05-23T11:15:00Z", runs: 36, owner: "Ethan Park", description: "Pull evidence packs aligned to UK ICO/DSIT principles weekly.", dnaScore: 93, clones: 2, model: "Claude Sonnet 4.6", hallucinationRate: 0.7 },
-  { id: "wf-013", name: "Pitch Deck Outline", department: "Creative", status: "Active", efficiency: 84, lastRun: "2026-05-24T04:30:00Z", runs: 218, owner: "Olivia Martin", description: "Sector-aware pitch deck outline + slide notes.", dnaScore: 79, clones: 5, model: "Gemini 2.5", hallucinationRate: 2.9 },
-  { id: "wf-014", name: "Sales Forecast Sync", department: "Consulting", status: "Draft", efficiency: 58, lastRun: "2026-05-18T13:20:00Z", runs: 11, owner: "Sofia Reyes", description: "Sync CRM forecasts to data warehouse with anomaly notes.", dnaScore: 62, clones: 0, model: "GPT-4o", hallucinationRate: 4.8 },
-  { id: "wf-015", name: "Help Centre Re-indexer", department: "Customer Success", status: "Active", efficiency: 92, lastRun: "2026-05-24T03:00:00Z", runs: 156, owner: "Noah Bennett", description: "Re-index help centre after edits and grade article clarity.", dnaScore: 90, clones: 4, model: "Claude Sonnet 4.6", hallucinationRate: 1.1 },
-  { id: "wf-016", name: "Payroll Anomaly Detector", department: "Finance", status: "Active", efficiency: 82, lastRun: "2026-05-22T19:00:00Z", runs: 24, owner: "Priya Shah", description: "Flag outliers and draft manager review notes before payroll run.", dnaScore: 85, clones: 2, model: "GPT-4o", hallucinationRate: 1.9 },
-  { id: "wf-017", name: "Client NPS Follow-up", department: "Customer Success", status: "Paused", efficiency: 67, lastRun: "2026-05-20T14:45:00Z", runs: 188, owner: "Daniel Cho", description: "Loop in account lead on detractor responses with talking points.", dnaScore: 70, clones: 3, model: "Gemini 2.5", hallucinationRate: 3.6 },
-  { id: "wf-018", name: "DPIA Draft (UK GDPR)", department: "Compliance", status: "Active", efficiency: 93, lastRun: "2026-05-24T08:00:00Z", runs: 64, owner: "Yuki Tanaka", description: "Draft Data Protection Impact Assessments aligned to UK GDPR.", dnaScore: 95, clones: 6, model: "Claude Sonnet 4.6", hallucinationRate: 0.6 },
+  { id: "wf-001", name: "Client Engagement Letter Draft", department: "Client Communication", status: "Active", efficiency: 94, lastRun: "2026-05-24T08:14:00Z", runs: 1284, owner: "Maya Patel", description: "Generate compliant engagement letters from intake form input.", dnaScore: 96, clones: 14, model: "Claude Sonnet 4.6", hallucinationRate: 1.2 },
+  { id: "wf-002", name: "Discovery Document Synthesis", department: "Research / Analysis", status: "Active", efficiency: 89, lastRun: "2026-05-24T07:32:00Z", runs: 612, owner: "Daniel Cho", description: "Summarise 200-page bundles into client-ready briefs with cited references.", dnaScore: 92, clones: 9, model: "Claude Sonnet 4.6", hallucinationRate: 2.1 },
+  { id: "wf-003", name: "Tax Advisory Note Generator", department: "Consulting / Delivery", status: "Active", efficiency: 87, lastRun: "2026-05-24T06:55:00Z", runs: 4124, owner: "Sofia Reyes", description: "Advisory note from client position, aligned to regulatory requirements.", dnaScore: 90, clones: 22, model: "GPT-4o", hallucinationRate: 1.8 },
+  { id: "wf-004", name: "Bid Response Composer", department: "Consulting / Delivery", status: "Paused", efficiency: 78, lastRun: "2026-05-22T15:11:00Z", runs: 304, owner: "Liam Wright", description: "Assemble tender responses from past-win library + new RFP.", dnaScore: 81, clones: 6, model: "GPT-4o", hallucinationRate: 3.4 },
+  { id: "wf-005", name: "IT Audit Risk Brief", department: "Coding / Development", status: "Active", efficiency: 95, lastRun: "2026-05-24T10:02:00Z", runs: 821, owner: "Aisha Khan", description: "Convert scan output into a client-readable risk brief with remediation steps.", dnaScore: 94, clones: 11, model: "Claude Sonnet 4.6", hallucinationRate: 0.9 },
+  { id: "wf-006", name: "Contract Renewal Reminders", department: "Client Communication", status: "Active", efficiency: 82, lastRun: "2026-05-24T06:00:00Z", runs: 142, owner: "Noah Bennett", description: "Auto-notify owners 60 / 30 / 7 days pre-renewal with redline summary.", dnaScore: 78, clones: 4, model: "Gemini 2.5", hallucinationRate: 2.8 },
+  { id: "wf-007", name: "Brand Guidelines Generator", department: "Strategic Insights", status: "Active", efficiency: 86, lastRun: "2026-05-23T16:42:00Z", runs: 78, owner: "Priya Shah", description: "Turn brand voice notes into a full style guide.", dnaScore: 84, clones: 3, model: "Claude Sonnet 4.6", hallucinationRate: 1.4 },
+  { id: "wf-008", name: "Vendor Due Diligence Check", department: "Workflow Automation", status: "Draft", efficiency: 64, lastRun: "2026-05-19T10:30:00Z", runs: 22, owner: "Marco Bianchi", description: "Validate vendor docs and produce GDPR risk score.", dnaScore: 67, clones: 0, model: "GPT-4o", hallucinationRate: 5.2 },
+  { id: "wf-009", name: "Campaign Performance Roll-up", department: "Strategic Insights", status: "Active", efficiency: 83, lastRun: "2026-05-24T05:00:00Z", runs: 412, owner: "Hannah Lee", description: "Daily multi-channel performance brief for agency clients.", dnaScore: 80, clones: 7, model: "Gemini 2.5", hallucinationRate: 2.4 },
+  { id: "wf-010", name: "Quarterly Close Narrative", department: "Reporting / Documentation", status: "Paused", efficiency: 71, lastRun: "2026-04-30T22:00:00Z", runs: 4, owner: "Maya Patel", description: "Generate the board narrative around quarter-end financials.", dnaScore: 72, clones: 1, model: "Claude Sonnet 4.6", hallucinationRate: 4.0 },
+  { id: "wf-011", name: "Refund Decision Letter", department: "Client Communication", status: "Active", efficiency: 89, lastRun: "2026-05-24T09:50:00Z", runs: 932, owner: "Aisha Khan", description: "Draft refund verdict with policy citations & fraud screen.", dnaScore: 88, clones: 8, model: "GPT-4o", hallucinationRate: 1.6 },
+  { id: "wf-012", name: "ICO Evidence Collection", department: "Workflow Automation", status: "Active", efficiency: 91, lastRun: "2026-05-23T11:15:00Z", runs: 36, owner: "Ethan Park", description: "Pull evidence packs aligned to UK ICO/DSIT principles weekly.", dnaScore: 93, clones: 2, model: "Claude Sonnet 4.6", hallucinationRate: 0.7 },
+  { id: "wf-013", name: "Pitch Deck Outline", department: "Strategic Insights", status: "Active", efficiency: 84, lastRun: "2026-05-24T04:30:00Z", runs: 218, owner: "Olivia Martin", description: "Sector-aware pitch deck outline + slide notes.", dnaScore: 79, clones: 5, model: "Gemini 2.5", hallucinationRate: 2.9 },
+  { id: "wf-014", name: "Sales Forecast Sync", department: "Consulting / Delivery", status: "Draft", efficiency: 58, lastRun: "2026-05-18T13:20:00Z", runs: 11, owner: "Sofia Reyes", description: "Sync CRM forecasts to data warehouse with anomaly notes.", dnaScore: 62, clones: 0, model: "GPT-4o", hallucinationRate: 4.8 },
+  { id: "wf-015", name: "Help Centre Re-indexer", department: "Client Communication", status: "Active", efficiency: 92, lastRun: "2026-05-24T03:00:00Z", runs: 156, owner: "Noah Bennett", description: "Re-index help centre after edits and grade article clarity.", dnaScore: 90, clones: 4, model: "Claude Sonnet 4.6", hallucinationRate: 1.1 },
+  { id: "wf-016", name: "Payroll Anomaly Detector", department: "Reporting / Documentation", status: "Active", efficiency: 82, lastRun: "2026-05-22T19:00:00Z", runs: 24, owner: "Priya Shah", description: "Flag outliers and draft manager review notes before payroll run.", dnaScore: 85, clones: 2, model: "GPT-4o", hallucinationRate: 1.9 },
+  { id: "wf-017", name: "Client NPS Follow-up", department: "Client Communication", status: "Paused", efficiency: 67, lastRun: "2026-05-20T14:45:00Z", runs: 188, owner: "Daniel Cho", description: "Loop in account lead on detractor responses with talking points.", dnaScore: 70, clones: 3, model: "Gemini 2.5", hallucinationRate: 3.6 },
+  { id: "wf-018", name: "DPIA Draft (UK GDPR)", department: "Workflow Automation", status: "Active", efficiency: 93, lastRun: "2026-05-24T08:00:00Z", runs: 64, owner: "Yuki Tanaka", description: "Draft Data Protection Impact Assessments aligned to UK GDPR.", dnaScore: 95, clones: 6, model: "Claude Sonnet 4.6", hallucinationRate: 0.6 },
 ];
 
 export const departments = Array.from(new Set(workflows.map((w) => w.department))).sort();
 
 // "Automations" are now Logic Triggers — small rules that fire DNA workflows on events.
 export const automations: Automation[] = [
-  { id: "auto-001", name: "Slack New RFP Alert", icon: "Bell", trigger: "New RFP in HubSpot", action: "Post brief to #bid-team", runs: 1248, status: "Active", category: "Consulting", enabled: true },
-  { id: "auto-002", name: "Invoice → SharePoint", icon: "FileText", trigger: "New invoice email", action: "Archive PDF to SharePoint", runs: 842, status: "Active", category: "Finance", enabled: true },
-  { id: "auto-003", name: "Daily Matter Digest", icon: "MessageSquare", trigger: "Weekday 9:00am", action: "DM partner yesterday's matter notes", runs: 312, status: "Active", category: "Legal", enabled: true },
-  { id: "auto-004", name: "Bug Report → Linear", icon: "Bug", trigger: "Form submission", action: "Create Linear ticket with DNA tag", runs: 96, status: "Paused", category: "IT Services", enabled: false },
-  { id: "auto-005", name: "Calendar → Notion Minutes", icon: "Calendar", trigger: "Meeting ends", action: "Synthesise notes via DNA pattern", runs: 624, status: "Active", category: "Productivity", enabled: true },
-  { id: "auto-006", name: "Stripe → Sheets", icon: "DollarSign", trigger: "Stripe payment", action: "Log row in Sheets (GBP)", runs: 1980, status: "Active", category: "Finance", enabled: true },
-  { id: "auto-007", name: "GitHub PR Reviewer", icon: "GitPullRequest", trigger: "PR opened", action: "Run review DNA + assign reviewer", runs: 514, status: "Active", category: "IT Services", enabled: true },
-  { id: "auto-008", name: "NPS Survey Send", icon: "Star", trigger: "Client 30d active", action: "Send survey via Intercom", runs: 207, status: "Paused", category: "Customer Success", enabled: false },
-  { id: "auto-009", name: "Expense Slack Approval", icon: "CheckCircle", trigger: "Expense > £500", action: "Slack approval to partner", runs: 88, status: "Active", category: "Finance", enabled: true },
-  { id: "auto-010", name: "Onboarding Email Drip", icon: "Mail", trigger: "Signup complete", action: "Trigger 7-step Mailchimp drip", runs: 1432, status: "Active", category: "Marketing", enabled: true },
-  { id: "auto-011", name: "Server Alert → PagerDuty", icon: "AlertTriangle", trigger: "CPU > 90% for 5m", action: "Page on-call engineer", runs: 41, status: "Active", category: "IT Services", enabled: true },
-  { id: "auto-012", name: "Contract Expiry Reminder", icon: "FileSignature", trigger: "30d before renewal", action: "Email account owner + draft note", runs: 62, status: "Draft", category: "Legal", enabled: false },
+  { id: "auto-001", name: "Slack New RFP Alert", icon: "Bell", trigger: "New RFP in HubSpot", action: "Post brief to #bid-team", runs: 1248, status: "Active", category: "Consulting / Delivery", enabled: true },
+  { id: "auto-002", name: "Invoice → SharePoint", icon: "FileText", trigger: "New invoice email", action: "Archive PDF to SharePoint", runs: 842, status: "Active", category: "Reporting / Documentation", enabled: true },
+  { id: "auto-003", name: "Daily Digest", icon: "MessageSquare", trigger: "Weekday 9:00am", action: "DM team yesterday's activity notes", runs: 312, status: "Active", category: "Client Communication", enabled: true },
+  { id: "auto-004", name: "Bug Report → Linear", icon: "Bug", trigger: "Form submission", action: "Create Linear ticket with DNA tag", runs: 96, status: "Paused", category: "Coding / Development", enabled: false },
+  { id: "auto-005", name: "Calendar → Notion Minutes", icon: "Calendar", trigger: "Meeting ends", action: "Synthesise notes via DNA pattern", runs: 624, status: "Active", category: "Workflow Automation", enabled: true },
+  { id: "auto-006", name: "Stripe → Sheets", icon: "DollarSign", trigger: "Stripe payment", action: "Log row in Sheets (GBP)", runs: 1980, status: "Active", category: "Reporting / Documentation", enabled: true },
+  { id: "auto-007", name: "GitHub PR Reviewer", icon: "GitPullRequest", trigger: "PR opened", action: "Run review DNA + assign reviewer", runs: 514, status: "Active", category: "Coding / Development", enabled: true },
+  { id: "auto-008", name: "NPS Survey Send", icon: "Star", trigger: "Client 30d active", action: "Send survey via Intercom", runs: 207, status: "Paused", category: "Client Communication", enabled: false },
+  { id: "auto-009", name: "Expense Slack Approval", icon: "CheckCircle", trigger: "Expense > £500", action: "Slack approval to partner", runs: 88, status: "Active", category: "Reporting / Documentation", enabled: true },
+  { id: "auto-010", name: "Onboarding Email Drip", icon: "Mail", trigger: "Signup complete", action: "Trigger 7-step Mailchimp drip", runs: 1432, status: "Active", category: "Strategic Insights", enabled: true },
+  { id: "auto-011", name: "Server Alert → PagerDuty", icon: "AlertTriangle", trigger: "CPU > 90% for 5m", action: "Page on-call engineer", runs: 41, status: "Active", category: "Coding / Development", enabled: true },
+  { id: "auto-012", name: "Contract Expiry Reminder", icon: "FileSignature", trigger: "30d before renewal", action: "Email account owner + draft note", runs: 62, status: "Draft", category: "Client Communication", enabled: false },
 ];
 
 export const reports: ReportItem[] = [
@@ -299,24 +299,24 @@ export const invoices: Invoice[] = [
 ];
 
 export const teamPerformers: TeamPerformer[] = [
-  { id: "p1", name: "Maya Patel", role: "DNA Architect", team: "Senior Devs", score: 98, workflowsOwned: 12, trend: 6 },
-  { id: "p2", name: "Aisha Khan", role: "Support Lead", team: "Customer Success", score: 95, workflowsOwned: 9, trend: 4 },
-  { id: "p3", name: "Sofia Reyes", role: "Tax Advisory Lead", team: "Consulting", score: 92, workflowsOwned: 7, trend: 8 },
-  { id: "p4", name: "Yuki Tanaka", role: "Compliance Engineer", team: "Compliance", score: 91, workflowsOwned: 6, trend: 3 },
-  { id: "p5", name: "Daniel Cho", role: "CS Manager", team: "Customer Success", score: 87, workflowsOwned: 5, trend: -2 },
-  { id: "p6", name: "Priya Shah", role: "Brand Strategist", team: "Creative", score: 84, workflowsOwned: 4, trend: 5 },
-  { id: "p7", name: "Noah Bennett", role: "Senior Dev Lead", team: "Senior Devs", score: 80, workflowsOwned: 3, trend: 1 },
+  { id: "p1", name: "Maya Patel", role: "DNA Architect", team: "Coding / Development", score: 98, workflowsOwned: 12, trend: 6 },
+  { id: "p2", name: "Aisha Khan", role: "Support Lead", team: "Client Communication", score: 95, workflowsOwned: 9, trend: 4 },
+  { id: "p3", name: "Sofia Reyes", role: "Consulting Lead", team: "Consulting / Delivery", score: 92, workflowsOwned: 7, trend: 8 },
+  { id: "p4", name: "Yuki Tanaka", role: "Automation Engineer", team: "Workflow Automation", score: 91, workflowsOwned: 6, trend: 3 },
+  { id: "p5", name: "Daniel Cho", role: "Client Success Manager", team: "Client Communication", score: 87, workflowsOwned: 5, trend: -2 },
+  { id: "p6", name: "Priya Shah", role: "Insights Strategist", team: "Strategic Insights", score: 84, workflowsOwned: 4, trend: 5 },
+  { id: "p7", name: "Noah Bennett", role: "Senior Dev Lead", team: "Coding / Development", score: 80, workflowsOwned: 3, trend: 1 },
 ];
 
 export const performanceByTeam = [
-  { team: "Senior Devs", score: 94 },
-  { team: "Compliance", score: 92 },
-  { team: "Consulting", score: 87 },
-  { team: "Customer Success", score: 84 },
+  { team: "Coding / Development", score: 94 },
+  { team: "Workflow Automation", score: 92 },
+  { team: "Consulting / Delivery", score: 87 },
+  { team: "Client Communication", score: 84 },
   { team: "IT Services", score: 90 },
-  { team: "Creative", score: 81 },
-  { team: "Finance", score: 78 },
-  { team: "Operations", score: 72 },
+  { team: "Strategic Insights", score: 81 },
+  { team: "Reporting / Documentation", score: 78 },
+  { team: "Research / Analysis", score: 72 },
 ];
 
 export const performanceOverTime = [
@@ -347,27 +347,27 @@ export const efficiencyTrend90d = Array.from({ length: 12 }, (_, i) => ({
 }));
 
 export const departmentDistribution = [
-  { name: "Senior Devs", value: 38, color: chartPalette.indigo },
-  { name: "Consulting", value: 32, color: chartPalette.sky },
+  { name: "Coding / Development", value: 38, color: chartPalette.indigo },
+  { name: "Consulting / Delivery", value: 32, color: chartPalette.sky },
   { name: "IT Services", value: 24, color: chartPalette.emerald },
-  { name: "Compliance", value: 18, color: chartPalette.amber },
-  { name: "Creative", value: 14, color: chartPalette.coral },
+  { name: "Workflow Automation", value: 18, color: chartPalette.amber },
+  { name: "Strategic Insights", value: 14, color: chartPalette.coral },
   { name: "Other", value: 22, color: chartPalette.slate },
 ];
 
 export const weekOverWeek = [
-  { area: "Legal", thisWeek: 94, lastWeek: 86 },
-  { area: "Compliance", thisWeek: 92, lastWeek: 84 },
+  { area: "Client Comms", thisWeek: 94, lastWeek: 86 },
+  { area: "Workflow Auto", thisWeek: 92, lastWeek: 84 },
   { area: "Consulting", thisWeek: 87, lastWeek: 81 },
   { area: "IT Services", thisWeek: 90, lastWeek: 84 },
-  { area: "Creative", thisWeek: 81, lastWeek: 76 },
+  { area: "Research", thisWeek: 81, lastWeek: 76 },
 ];
 
 export const keyInsights = [
-  { icon: "TrendingUp", title: "Logic Score climbed 12% this month", stat: "+12%", tone: "good" as const, body: "Average Workflow DNA Logic Score rose from 3.84 to 4.30 — driven by the new engagement-letter and DPIA patterns." },
+  { icon: "TrendingUp", title: "Logic Score climbed 12% this month", stat: "+12%", tone: "good" as const, body: "Average Workflow DNA Logic Score rose from 3.84 to 4.30 — driven by Consulting / Delivery and Coding & Development teams adopting new patterns." },
   { icon: "AlertTriangle", title: "PFFE flagged a context-drift spike", stat: "+38%", tone: "warn" as const, body: "Drift events on Bid Response and Sales Forecast workflows jumped Tue–Thu. Likely a model regression on long contexts." },
-  { icon: "Clock", title: "Time-to-proficiency down to 14 days", stat: "14d", tone: "good" as const, body: "New joiners reach founder-level output in 14 days using cloned DNA — vs. 45 days on raw prompting." },
-  { icon: "Sparkles", title: "3 new DNA patterns imported from CLN", stat: "3 new", tone: "good" as const, body: "Peer firms in Manchester and Bristol contributed an HMRC, an ICO DPIA, and a Bid Response pattern this week." },
+  { icon: "Clock", title: "Time-to-proficiency down to 14 days", stat: "14d", tone: "good" as const, body: "New joiners across IT Services and SaaS firms reach founder-level output in 14 days using cloned DNA — vs. 45 days on raw prompting." },
+  { icon: "Sparkles", title: "3 new DNA patterns imported from CLN", stat: "3 new", tone: "good" as const, body: "Peer firms in Manchester and Bristol contributed a Research & Analysis, a Workflow Automation, and a Bid Response pattern this week." },
 ];
 
 export const notificationSettings: NotificationSetting[] = [
@@ -403,7 +403,7 @@ export const currentUser = {
   name: "Alex Rivera",
   email: "alex@promptops.ai",
   role: "Workspace Admin",
-  team: "Operations",
+  team: "Workflow Automation",
   joined: "2025-09-14",
 };
 
@@ -483,19 +483,19 @@ export const complianceTrend = [
 
 export const communityNodes: CommunityNode[] = [
   { id: "n-001", firm: "Northern Tax Partners (Manchester)", region: "North West", sector: "Consulting", sharedDNA: 24, contributions: 138, reliability: 94 },
-  { id: "n-002", firm: "Cambridge Legal Lab", region: "East", sector: "Legal", sharedDNA: 18, contributions: 104, reliability: 92 },
-  { id: "n-003", firm: "Bristol Brand Studio", region: "South West", sector: "Creative", sharedDNA: 11, contributions: 62, reliability: 88 },
+  { id: "n-002", firm: "Cambridge Research Lab", region: "East", sector: "Research & Development", sharedDNA: 18, contributions: 104, reliability: 92 },
+  { id: "n-003", firm: "Bristol SaaS Studio", region: "South West", sector: "SaaS/Product Company", sharedDNA: 11, contributions: 62, reliability: 88 },
   { id: "n-004", firm: "Edinburgh Cyber Co-op", region: "Scotland", sector: "IT Services", sharedDNA: 16, contributions: 91, reliability: 96 },
-  { id: "n-005", firm: "Cardiff Counsel Collective", region: "Wales", sector: "Legal", sharedDNA: 9, contributions: 41, reliability: 90 },
-  { id: "n-006", firm: "Belfast Boutique Audit", region: "Northern Ireland", sector: "Compliance", sharedDNA: 7, contributions: 33, reliability: 93 },
+  { id: "n-005", firm: "Cardiff SaaS Collective", region: "Wales", sector: "SaaS/Product Company", sharedDNA: 9, contributions: 41, reliability: 90 },
+  { id: "n-006", firm: "Belfast Research Group", region: "Northern Ireland", sector: "Research & Development", sharedDNA: 7, contributions: 33, reliability: 93 },
 ];
 
 export const sharedDNAFeed: SharedDNA[] = [
-  { id: "s-001", name: "HMRC Capital Allowances Advisory", sector: "Consulting", contributor: "Northern Tax Partners", uses: 412, rating: 4.7, hallucinationReduction: 22, imported: true },
-  { id: "s-002", name: "UK GDPR DPIA Template (SaaS)", sector: "Compliance", contributor: "Cambridge Legal Lab", uses: 318, rating: 4.8, hallucinationReduction: 31, imported: true },
+  { id: "s-001", name: "Advisory Note Generator", sector: "Consulting", contributor: "Northern Tax Partners", uses: 412, rating: 4.7, hallucinationReduction: 22, imported: true },
+  { id: "s-002", name: "UK GDPR DPIA Template (SaaS)", sector: "SaaS/Product Company", contributor: "Cambridge Research Lab", uses: 318, rating: 4.8, hallucinationReduction: 31, imported: true },
   { id: "s-003", name: "Bid Response — Public Sector Tender", sector: "Consulting", contributor: "Edinburgh Cyber Co-op", uses: 287, rating: 4.5, hallucinationReduction: 18, imported: false },
-  { id: "s-004", name: "Brand Voice Guide Generator", sector: "Creative", contributor: "Bristol Brand Studio", uses: 196, rating: 4.4, hallucinationReduction: 12, imported: false },
-  { id: "s-005", name: "Engagement Letter (England & Wales)", sector: "Legal", contributor: "Cardiff Counsel Collective", uses: 174, rating: 4.6, hallucinationReduction: 20, imported: false },
+  { id: "s-004", name: "Product Insights Report Generator", sector: "SaaS/Product Company", contributor: "Bristol SaaS Studio", uses: 196, rating: 4.4, hallucinationReduction: 12, imported: false },
+  { id: "s-005", name: "Client Engagement Brief Composer", sector: "Consulting", contributor: "Cardiff SaaS Collective", uses: 174, rating: 4.6, hallucinationReduction: 20, imported: false },
   { id: "s-006", name: "Penetration Test Brief Synthesiser", sector: "IT Services", contributor: "Edinburgh Cyber Co-op", uses: 152, rating: 4.5, hallucinationReduction: 17, imported: false },
 ];
 

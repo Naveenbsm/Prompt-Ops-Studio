@@ -90,7 +90,7 @@ export default function OverviewPage() {
 
         <SectionCard
           title="8-week UK pilot benchmarks"
-          description="Validated across 5 UK consulting, legal, IT and creative firms."
+          description="Validated across IT Services, Consulting, SaaS and Research & Development firms."
         >
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {pilotBenchmarks.map((b) => (

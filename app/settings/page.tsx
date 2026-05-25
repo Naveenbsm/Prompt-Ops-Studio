@@ -174,13 +174,13 @@ function ProfileTab() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Operations">Operations</SelectItem>
-              <SelectItem value="Consulting">Consulting</SelectItem>
-              <SelectItem value="Legal">Legal</SelectItem>
-              <SelectItem value="IT Services">IT Services</SelectItem>
-              <SelectItem value="Compliance">Compliance</SelectItem>
-              <SelectItem value="Creative">Creative</SelectItem>
-              <SelectItem value="Finance">Finance</SelectItem>
+              <SelectItem value="Consulting / Delivery">Consulting / Delivery</SelectItem>
+              <SelectItem value="Research / Analysis">Research / Analysis</SelectItem>
+              <SelectItem value="Coding / Development">Coding / Development</SelectItem>
+              <SelectItem value="Workflow Automation">Workflow Automation</SelectItem>
+              <SelectItem value="Reporting / Documentation">Reporting / Documentation</SelectItem>
+              <SelectItem value="Strategic Insights">Strategic Insights</SelectItem>
+              <SelectItem value="Client Communication">Client Communication</SelectItem>
             </SelectContent>
           </Select>
         </div>
