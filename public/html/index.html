@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>PromptOps AI Design. Optimize. Automate. Elevate.</title>
+<script>try{var u=new URLSearchParams(location.search).get('theme');document.documentElement.setAttribute('data-theme',u||localStorage.getItem('po-theme')||'light')}catch(e){}</script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
@@ -85,14 +86,24 @@ button,input,select,textarea{font-family:var(--fb)}
 .gtext-gold{background:linear-gradient(135deg,var(--gold) 0%,#fbbf24 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 /* ============================
+   THEME TOGGLE
+============================ */
+.theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--brd);background:#fff;color:var(--txd2);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0;position:relative;overflow:hidden}
+.theme-toggle:hover{background:var(--bg2);color:var(--txd1);border-color:var(--brd2)}
+.theme-toggle svg{width:16px;height:16px;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .25s}
+.theme-toggle .ic-moon{position:absolute;transform:rotate(-90deg) scale(0);opacity:0}
+[data-theme="dark"] .theme-toggle .ic-sun{transform:rotate(90deg) scale(0);opacity:0}
+[data-theme="dark"] .theme-toggle .ic-moon{transform:rotate(0) scale(1);opacity:1}
+
+/* ============================
    SIDEBAR
 ============================ */
 .sb{position:fixed;top:0;left:0;bottom:0;width:var(--sw);background:rgba(255,255,255,0.7);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);display:flex;flex-direction:column;z-index:500;border-right:1px solid var(--brd);overflow-y:auto}
 .sb::-webkit-scrollbar{width:6px}
 .sb::-webkit-scrollbar-thumb{background:var(--brd);border-radius:3px}
 
-.sb-brand{padding:0 20px;height:64px;display:flex;align-items:center;border-bottom:1px solid var(--brd);flex-shrink:0;position:relative}
-.sb-logo-row{display:flex;align-items:center;gap:10px}
+.sb-brand{padding:0 16px 0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--brd);flex-shrink:0;position:relative;gap:8px}
+.sb-logo-row{display:flex;align-items:center;gap:10px;min-width:0}
 .sb-icon{width:36px;height:36px;border-radius:12px;background:#0A2540;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px -3px rgba(10,37,64,0.35);position:relative}
 .sb-icon::after{content:"";position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:var(--ind);box-shadow:0 0 0 2px #fff}
 .sb-icon svg{width:20px;height:20px;color:#fff}
@@ -873,6 +884,264 @@ button,input,select,textarea{font-family:var(--fb)}
 .animate-in:nth-child(2){transition-delay:.08s}
 .animate-in:nth-child(3){transition-delay:.16s}
 .animate-in:nth-child(4){transition-delay:.24s}
+
+/* ============================
+   DARK THEME — matches app's .dark palette
+============================ */
+[data-theme="dark"]{
+  --ink:#070C18; --ink2:#0A0F1C; --ink3:#11172A; --ink4:#1A2236;
+  --v9:#1B2660; --v8:#272F80; --v7:#3F38C7;
+  --v5:#8780FF; --v4:#635BFF; --v3:#8780FF; --v2:#A5A0FF;
+  --v1:#C8C3FF; --v0:#E8E5FF; --vb:#1A2236; --vl:#11172A;
+
+  --ind:#8780FF; --ind-l:rgba(135,128,255,0.15); --ind-b:rgba(135,128,255,0.35);
+
+  --ok:#34D399; --ok-l:rgba(52,211,153,0.12); --ok-b:rgba(52,211,153,0.3);
+  --warn:#FBBF24; --warn-l:rgba(251,191,36,0.12); --warn-b:rgba(251,191,36,0.3);
+  --red:#F87171; --red-l:rgba(248,113,113,0.12); --red-b:rgba(248,113,113,0.3);
+  --cyan:#22D3EE; --cyan-l:rgba(34,211,238,0.12); --cyan-b:rgba(34,211,238,0.3);
+  --gold:#FBBF24; --gold-l:rgba(251,191,36,0.12); --gold-b:rgba(251,191,36,0.3);
+
+  --tx1:#0A0F1C; --tx2:#1A2236; --tx3:#5C6886; --tx4:#99A2B6;
+  --txd1:#E3E8EF; --txd2:#99A2B6; --txd3:#6B7689;
+
+  --brd:#232B3F; --brd2:rgba(135,128,255,0.28); --brd3:rgba(135,128,255,0.5);
+
+  --sh-xs:0 2px 8px rgba(0,0,0,0.3);
+  --sh-s:0 4px 16px rgba(0,0,0,0.4);
+  --sh-m:0 8px 32px rgba(0,0,0,0.5);
+  --sh-l:0 16px 56px rgba(0,0,0,0.55);
+  --sh-xl:0 24px 80px rgba(0,0,0,0.65);
+
+  --bg:#0A0F1C; --bg2:#11172A; --bg3:#1A2236;
+}
+
+[data-theme="dark"] body{background:#0A0F1C;color:#E3E8EF}
+
+/* Surfaces — sidebar / topbar / drawer */
+[data-theme="dark"] .sb{background:rgba(17,23,42,0.7)}
+[data-theme="dark"] .topbar{background:rgba(10,15,28,0.8);border-bottom-color:#232B3F}
+[data-theme="dark"] .m-top{background:rgba(10,15,28,0.9);border-bottom-color:#232B3F}
+[data-theme="dark"] .m-bottom{background:rgba(10,15,28,0.92);border-top-color:#232B3F}
+[data-theme="dark"] .m-hbg{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .m-hbg:hover{background:#1A2236}
+[data-theme="dark"] .m-hbg span{background:#E3E8EF}
+[data-theme="dark"] .dr{background:#11172A;border-right-color:#232B3F}
+[data-theme="dark"] .dr-head{border-bottom-color:#232B3F}
+[data-theme="dark"] .dr-close{background:#1A2236;border-color:#232B3F;color:#99A2B6}
+[data-theme="dark"] .dr-close:hover{background:#232B3F;color:#E3E8EF}
+[data-theme="dark"] .dr-live{background:rgba(52,211,153,0.06);border-bottom-color:#232B3F}
+[data-theme="dark"] .dr-item:hover,
+[data-theme="dark"] .dr-item.active{background:#1A2236;color:#E3E8EF}
+[data-theme="dark"] .dr-foot{border-top-color:#232B3F}
+
+/* Logo & icon ring */
+[data-theme="dark"] .sb-icon,
+[data-theme="dark"] .dr-icon{background:#1A2236;box-shadow:0 4px 12px -3px rgba(0,0,0,0.6),inset 0 0 0 1px rgba(135,128,255,0.18)}
+[data-theme="dark"] .sb-icon::after,
+[data-theme="dark"] .dr-icon::after,
+[data-theme="dark"] .ai-head-icon::after{box-shadow:0 0 0 2px #11172A;background:#8780FF}
+[data-theme="dark"] .sb-brand-name em,
+[data-theme="dark"] .m-brand-nm em,
+[data-theme="dark"] .dr-name em,
+[data-theme="dark"] .footer-brand h3 em{background:linear-gradient(90deg,#A5A0FF,#8780FF,#C8C3FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Sidebar nav */
+[data-theme="dark"] .sb-brand{border-bottom-color:#232B3F}
+[data-theme="dark"] .sb-item:hover,
+[data-theme="dark"] .sb-item.active{background:#1A2236;color:#E3E8EF}
+[data-theme="dark"] .sb-item.active::before,
+[data-theme="dark"] .dr-item.active::before{background:#8780FF}
+[data-theme="dark"] .sb-item:hover .sb-item-ic,
+[data-theme="dark"] .sb-item.active .sb-item-ic,
+[data-theme="dark"] .dr-item:hover svg,
+[data-theme="dark"] .dr-item.active svg{color:#A5A0FF}
+[data-theme="dark"] .sb-footer{border-top-color:#232B3F}
+[data-theme="dark"] .sb-upgrade{background-color:#1A2236;background-image:radial-gradient(circle at 0% 0%,rgba(135,128,255,0.14),transparent 60%),radial-gradient(circle at 100% 100%,rgba(135,128,255,0.06),transparent 55%);border-color:#232B3F}
+[data-theme="dark"] .sb-cta{background:#E3E8EF;color:#0A0F1C}
+[data-theme="dark"] .sb-cta:hover{opacity:.92}
+
+/* Topbar button */
+[data-theme="dark"] .topbar-btn{background:#8780FF;color:#0A0F1C;box-shadow:0 1px 2px rgba(0,0,0,0.3)}
+[data-theme="dark"] .topbar-btn:hover{background:#A5A0FF;box-shadow:0 4px 12px rgba(135,128,255,0.35)}
+[data-theme="dark"] .m-demo-btn{background:#8780FF;color:#0A0F1C}
+
+/* Theme toggle in dark */
+[data-theme="dark"] .theme-toggle{background:#1A2236;border-color:#232B3F;color:#99A2B6}
+[data-theme="dark"] .theme-toggle:hover{background:#232B3F;color:#E3E8EF}
+
+/* Hero */
+[data-theme="dark"] .hero{background:#0A0F1C;background-image:radial-gradient(circle at 0% 0%,rgba(135,128,255,0.14),transparent 60%),radial-gradient(circle at 100% 100%,rgba(99,91,255,0.08),transparent 55%);border-bottom-color:#232B3F}
+[data-theme="dark"] .hero::before{background:radial-gradient(ellipse 50% 60% at 85% 20%,rgba(135,128,255,0.12) 0%,transparent 65%),radial-gradient(ellipse 35% 45% at 15% 80%,rgba(99,91,255,0.08) 0%,transparent 60%)}
+[data-theme="dark"] .hero::after{background-image:linear-gradient(rgba(135,128,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(135,128,255,0.03) 1px,transparent 1px)}
+[data-theme="dark"] .hero h1{color:#E3E8EF}
+[data-theme="dark"] .hero h1 .hl{background:linear-gradient(135deg,#C8C3FF 0%,#A5A0FF 55%,#8780FF 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="dark"] .hero-sub{color:#99A2B6}
+[data-theme="dark"] .hero-sub strong{color:#E3E8EF}
+[data-theme="dark"] .htag{background:#11172A;border-color:#232B3F;color:#99A2B6}
+[data-theme="dark"] .htag.green{background:rgba(52,211,153,0.08);border-color:rgba(52,211,153,0.3);color:#6EE7B7}
+[data-theme="dark"] .htag.blue{background:rgba(135,128,255,0.08);border-color:rgba(135,128,255,0.3);color:#A5A0FF}
+[data-theme="dark"] .btn-primary{background:#8780FF;color:#0A0F1C;box-shadow:0 4px 14px rgba(135,128,255,0.3)}
+[data-theme="dark"] .btn-primary:hover{background:#A5A0FF;box-shadow:0 6px 20px rgba(135,128,255,0.4)}
+[data-theme="dark"] .btn-ghost{background:#11172A;color:#E3E8EF;border-color:#232B3F}
+[data-theme="dark"] .btn-ghost:hover{background:#1A2236;border-color:#3F4A66}
+[data-theme="dark"] .hero-metrics{color:#6B7689}
+
+/* Gradient text utility */
+[data-theme="dark"] .gtext{background:linear-gradient(135deg,#C8C3FF 0%,#A5A0FF 55%,#8780FF 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Dashboard panel */
+[data-theme="dark"] .h-dashboard{background:#11172A;border-color:#232B3F;box-shadow:0 4px 24px rgba(0,0,0,0.4)}
+[data-theme="dark"] .m-cell{background:#1A2236;border-color:#232B3F}
+[data-theme="dark"] .m-cell:hover{background:#232B3F;border-color:#3F4A66}
+[data-theme="dark"] .m-lbl{color:#99A2B6}
+[data-theme="dark"] .m-val.v{background:linear-gradient(135deg,#A5A0FF,#8780FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="dark"] .m-val.i{background:linear-gradient(135deg,#A5A0FF,#C8C3FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="dark"] .perf-box{background:#1A2236;border-color:#232B3F}
+[data-theme="dark"] .perf-title,[data-theme="dark"] .perf-lbl{color:#99A2B6}
+[data-theme="dark"] .perf-track{background:#232B3F}
+[data-theme="dark"] .perf-pct{color:#C8C3FF}
+
+/* Sections */
+[data-theme="dark"] .sec-light{background:#0A0F1C}
+[data-theme="dark"] .sec-muted{background:#11172A}
+[data-theme="dark"] .sec-muted::before{background:linear-gradient(90deg,transparent,rgba(135,128,255,0.25),transparent)}
+[data-theme="dark"] .sec-dark{background:linear-gradient(145deg,#070C18 0%,#0A0F1C 55%,#070C18 100%)}
+[data-theme="dark"] .sec-hd h2{color:#E3E8EF}
+[data-theme="dark"] .sec-hd p{color:#99A2B6}
+[data-theme="dark"] .eyebrow{color:#A5A0FF}
+[data-theme="dark"] .eyebrow::before{background:#A5A0FF}
+
+/* Cards */
+[data-theme="dark"] .card{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .card:hover{background:#161D33;border-color:rgba(135,128,255,0.35);box-shadow:0 8px 36px rgba(0,0,0,0.5)}
+[data-theme="dark"] .card h3{color:#E3E8EF}
+[data-theme="dark"] .card p{color:#99A2B6}
+[data-theme="dark"] .card-dark{background:rgba(255,255,255,0.04);border-color:rgba(165,160,255,0.2)}
+[data-theme="dark"] .c-icon.v{background:rgba(135,128,255,0.12);border-color:rgba(135,128,255,0.28);color:#A5A0FF}
+[data-theme="dark"] .c-icon.i{background:rgba(135,128,255,0.12);border-color:rgba(135,128,255,0.28);color:#A5A0FF}
+
+/* Stat cards */
+[data-theme="dark"] .stat-card{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .stat-card:hover{border-color:rgba(135,128,255,0.45)}
+[data-theme="dark"] .stat-desc{color:#99A2B6}
+[data-theme="dark"] .stat-note{color:#6B7689}
+[data-theme="dark"] .stat-val.v{background:linear-gradient(135deg,#A5A0FF,#8780FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="dark"] .stat-val.i{background:linear-gradient(135deg,#A5A0FF,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* KPI banner */
+[data-theme="dark"] .kpi-banner{background:linear-gradient(135deg,rgba(135,128,255,0.08),rgba(99,91,255,0.04));border-color:#232B3F}
+[data-theme="dark"] .kpi-label{color:#A5A0FF}
+[data-theme="dark"] .kpi-lbl{color:#99A2B6}
+
+/* Chart panels */
+[data-theme="dark"] .ch-panel{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .ch-title{color:#E3E8EF}
+[data-theme="dark"] .ch-sub{color:#6B7689}
+
+/* Activity feed */
+[data-theme="dark"] .act-item{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .act-item:hover{background:#161D33;border-color:rgba(135,128,255,0.3)}
+[data-theme="dark"] .act-msg{color:#E3E8EF}
+[data-theme="dark"] .act-ts{color:#6B7689}
+
+/* Pills/chips already adapt via vars; explicit overrides for clarity */
+[data-theme="dark"] .chip-ok{background:rgba(52,211,153,0.12);color:#34D399;border-color:rgba(52,211,153,0.3)}
+[data-theme="dark"] .chip-v,[data-theme="dark"] .chip-i{background:rgba(135,128,255,0.12);color:#A5A0FF;border-color:rgba(135,128,255,0.3)}
+[data-theme="dark"] .pill-v,[data-theme="dark"] .pill-i{background:rgba(135,128,255,0.12);color:#A5A0FF;border-color:rgba(135,128,255,0.3)}
+[data-theme="dark"] .pill-g{background:rgba(52,211,153,0.12);color:#34D399;border-color:rgba(52,211,153,0.3)}
+
+/* Comparison table */
+[data-theme="dark"] .cmp-wrap{border-color:#232B3F}
+[data-theme="dark"] .cmp-tbl th{background:#1A2236;color:#99A2B6;border-bottom-color:#232B3F}
+[data-theme="dark"] .cmp-tbl th:last-child{background:rgba(135,128,255,0.12);color:#A5A0FF;border-bottom-color:#8780FF}
+[data-theme="dark"] .cmp-tbl td{border-bottom-color:#232B3F;color:#E3E8EF}
+[data-theme="dark"] .cmp-tbl td:last-child{background:rgba(135,128,255,0.08);color:#A5A0FF}
+[data-theme="dark"] .cmp-tbl tbody tr:hover td{background:#1A2236}
+[data-theme="dark"] .cmp-no{color:#6B7689}
+
+/* Financial table */
+[data-theme="dark"] .fin-wrap{border-color:#232B3F}
+[data-theme="dark"] .fin-tbl th{background:#1A2236;color:#A5A0FF;border-bottom-color:#232B3F}
+[data-theme="dark"] .fin-tbl td{border-bottom-color:#232B3F;color:#99A2B6}
+[data-theme="dark"] .fin-tbl tr:last-child td{color:#E3E8EF}
+[data-theme="dark"] .fin-tbl tbody tr:hover td{background:#1A2236}
+
+/* Pricing */
+[data-theme="dark"] .price-card{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .price-card.featured{border-color:rgba(135,128,255,0.5);box-shadow:0 0 0 1px rgba(135,128,255,0.22),0 8px 32px rgba(0,0,0,0.5)}
+[data-theme="dark"] .pc-features li{border-bottom-color:#232B3F;color:#99A2B6}
+[data-theme="dark"] .pc-desc{color:#99A2B6}
+[data-theme="dark"] .pc-price{background:linear-gradient(135deg,#A5A0FF,#8780FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="dark"] .pc-price span{color:#6B7689;-webkit-text-fill-color:#6B7689}
+[data-theme="dark"] .pc-btn{background:rgba(135,128,255,0.1);color:#A5A0FF;border-color:#232B3F}
+[data-theme="dark"] .pc-btn:hover{background:#8780FF;color:#0A0F1C;border-color:#8780FF}
+[data-theme="dark"] .price-card.featured .pc-btn{background:#8780FF;color:#0A0F1C;border:none}
+
+/* Demo & DNA */
+[data-theme="dark"] .demo-terminal{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .demo-winbar{background:#1A2236}
+[data-theme="dark"] .demo-input{background:#1A2236;border-color:#232B3F;color:#E3E8EF}
+[data-theme="dark"] .demo-input:focus{background:#11172A;border-color:#8780FF;box-shadow:0 0 0 3px rgba(135,128,255,0.15)}
+[data-theme="dark"] .demo-output{background:#1A2236;border-color:#232B3F;color:#99A2B6}
+[data-theme="dark"] .demo-btn-run{background:#8780FF;color:#0A0F1C}
+[data-theme="dark"] .demo-btn-forensics{background:rgba(135,128,255,0.12);color:#A5A0FF;border-color:rgba(135,128,255,0.3)}
+[data-theme="dark"] .pipe-circle{background:#11172A;border-color:rgba(135,128,255,0.3);color:#A5A0FF}
+[data-theme="dark"] .pipe-node.step-active .pipe-circle{background:#8780FF;color:#0A0F1C}
+[data-theme="dark"] .pipe-node h4{color:#E3E8EF}
+[data-theme="dark"] .pipe-node p{color:#6B7689}
+[data-theme="dark"] .dna-row{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .dna-row:hover{background:#161D33;border-color:rgba(135,128,255,0.35)}
+[data-theme="dark"] .dna-nm{color:#E3E8EF}
+[data-theme="dark"] .dna-ds{color:#99A2B6}
+
+/* Testimonials, region, timeline */
+[data-theme="dark"] .testi-card{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .testi-quote{color:#99A2B6}
+[data-theme="dark"] .testi-nm{color:#E3E8EF}
+[data-theme="dark"] .testi-role{color:#6B7689}
+[data-theme="dark"] .region-card{background:#11172A;border-color:#232B3F}
+[data-theme="dark"] .region-card h4{color:#E3E8EF}
+[data-theme="dark"] .region-card ul li{color:#99A2B6}
+[data-theme="dark"] .tl-title{color:#E3E8EF}
+[data-theme="dark"] .tl-desc{color:#99A2B6}
+[data-theme="dark"] .tl-yr{color:#A5A0FF}
+
+/* Progress bars */
+[data-theme="dark"] .prog-track{background:#1A2236}
+[data-theme="dark"] .prog-lbl{color:#99A2B6}
+
+/* Feature highlight */
+[data-theme="dark"] .feat-item{border-bottom-color:#232B3F}
+[data-theme="dark"] .feat-body h3{color:#E3E8EF}
+[data-theme="dark"] .feat-body p{color:#99A2B6}
+
+/* AI chat */
+[data-theme="dark"] .ai-fab{background:#1A2236;box-shadow:0 8px 24px rgba(0,0,0,0.5),inset 0 0 0 1px rgba(135,128,255,0.2)}
+[data-theme="dark"] .ai-fab:hover{background:#232B3F}
+[data-theme="dark"] .ai-online{border-color:#0A0F1C}
+[data-theme="dark"] .ai-panel{background:#11172A;border-color:#232B3F;box-shadow:0 24px 64px rgba(0,0,0,0.6),0 4px 16px rgba(0,0,0,0.4)}
+[data-theme="dark"] .ai-head{background:#1A2236;border-bottom-color:#232B3F}
+[data-theme="dark"] .ai-head-nm{color:#E3E8EF}
+[data-theme="dark"] .ai-close{background:#11172A;border-color:#232B3F;color:#99A2B6}
+[data-theme="dark"] .ai-close:hover{background:#232B3F;color:#E3E8EF}
+[data-theme="dark"] .ai-messages,
+[data-theme="dark"] .ai-suggestions{background:#11172A}
+[data-theme="dark"] .ai-msg.bot{background:#1A2236;border-color:#232B3F;color:#E3E8EF}
+[data-theme="dark"] .ai-msg.usr{background:#8780FF;color:#0A0F1C}
+[data-theme="dark"] .ai-sug{background:#1A2236;border-color:#232B3F;color:#E3E8EF}
+[data-theme="dark"] .ai-sug:hover{background:#232B3F;border-color:#3F4A66;color:#A5A0FF}
+[data-theme="dark"] .ai-input-row{background:#1A2236;border-top-color:#232B3F}
+[data-theme="dark"] .ai-input{background:#11172A;border-color:#232B3F;color:#E3E8EF}
+[data-theme="dark"] .ai-input::placeholder{color:#6B7689}
+[data-theme="dark"] .ai-send{background:#8780FF}
+
+/* Footer keeps dark navy, just deepen */
+[data-theme="dark"] .footer{background:#050912}
+
+/* Scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar-thumb{background:#232B3F;border-color:#0A0F1C}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover{background:#3F4A66}
 </style>
 </head>
 <body>
@@ -891,6 +1160,10 @@ button,input,select,textarea{font-family:var(--fb)}
         <div class="sb-tagline">AI · STUDIO</div>
       </div>
     </div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle theme">
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
   </div>
   <div class="sb-nav">
     <div class="sb-grp">
@@ -981,6 +1254,10 @@ button,input,select,textarea{font-family:var(--fb)}
   </div>
   <div class="m-right">
     <div class="m-live-pill"><div class="sb-dot" style="width:6px;height:6px"></div>Live</div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
     <button class="m-demo-btn" onclick="nav('demo')">Demo</button>
     <div class="m-hbg" id="m-hbg" onclick="toggleDrawer()"><span></span><span></span><span></span></div>
   </div>
@@ -2474,6 +2751,24 @@ button,input,select,textarea{font-family:var(--fb)}
 </div><!-- /main -->
 
 <script>
+// ============================ THEME TOGGLE ============================
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  try{ localStorage.setItem('po-theme', theme); }catch(e){}
+  if(typeof Chart !== 'undefined' && typeof applyChartTheme === 'function'){
+    applyChartTheme();
+    const activePg = document.querySelector('.page.active');
+    if(activePg && activePg.id){
+      const pid = activePg.id.replace(/^p-/,'');
+      try{ initCharts(pid); }catch(e){}
+    }
+  }
+}
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  applyTheme(cur === 'dark' ? 'light' : 'dark');
+}
+
 // ============================ NAVIGATION ============================
 const PAGE_LABELS = {overview:'Overview',problem:'Problem Statement',solution:'Solution & Product',market:'Market Research',demo:'Live Demo',features:'Features',pricing:'Pricing Plans',financials:'Financials',growth:'Growth Plan',founder:'Founder Profile',moat:'Competitive Moat',esg:'ESG & Compliance',risk:'Risk & Legal'};
 const PAGE_IDS = ['overview','problem','solution','market','demo','features','pricing','financials','growth','founder','moat','esg','risk'];
@@ -2586,14 +2881,21 @@ function sendMsg(){
 const CI={};
 const inited=new Set();
 
-// Color palette — Stripe-inspired indigo
+// Color palette — Stripe-inspired indigo (theme-aware via CP.tick / CP.bg_grid)
 const CP={v4:'#4F46E5',v3:'#635BFF',v2:'#8780FF',v1:'rgba(99,91,255,0.7)',
   ok:'#1FB37A',warn:'#F59E0B',ind:'#635BFF',cyan:'#0891B2',red:'#DF1B41',
   ok_a:'rgba(31,179,122,0.7)',ind_a:'rgba(99,91,255,0.7)',
+  tick:'#5C6886',
   bg_grid:'rgba(99,91,255,0.08)'};
 
+function applyChartTheme(){
+  const dark=document.documentElement.getAttribute('data-theme')==='dark';
+  CP.tick = dark ? '#99A2B6' : '#5C6886';
+  CP.bg_grid = dark ? 'rgba(135,128,255,0.12)' : 'rgba(99,91,255,0.08)';
+  Chart.defaults.color = CP.tick;
+}
+applyChartTheme();
 Chart.defaults.font.family='"Inter",ui-sans-serif,system-ui,sans-serif';
-Chart.defaults.color='#5C6886';
 
 function getEl(id){return document.getElementById(id);}
 function safeChart(id,config){
@@ -2610,8 +2912,8 @@ function mkBar(id,labels,data,colors,opts={}){
     type:'bar',
     data:{labels,datasets:[{data,backgroundColor:colors,borderRadius:8,borderSkipped:false}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{color:'#5C6886',font:{size:9}}},
-        x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:9}}}},
+      scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{color:CP.tick,font:{size:9}}},
+        x:{grid:{display:false},ticks:{color:CP.tick,font:{size:9}}}},
       ...opts}
   });
 }
@@ -2620,24 +2922,24 @@ function mkLine(id,labels,data,color,fillColor){
     type:'line',
     data:{labels,datasets:[{data,borderColor:color,backgroundColor:fillColor,fill:true,tension:0.4,pointBackgroundColor:color,pointRadius:5,borderWidth:2.5}]},
     options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{color:'#5C6886',font:{size:9}}},
-        x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:10}}}}}
+      scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{color:CP.tick,font:{size:9}}},
+        x:{grid:{display:false},ticks:{color:CP.tick,font:{size:10}}}}}
   });
 }
 function mkDoughnut(id,labels,data,colors){
   return safeChart(id,{
     type:'doughnut',
     data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:0,hoverOffset:10}]},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:10},boxWidth:10,padding:8}}}}
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:10},boxWidth:10,padding:8}}}}
   });
 }
 function mkStackedBar(id,labels,datasets){
   return safeChart(id,{
     type:'bar',
     data:{labels,datasets},
-    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}},
-      scales:{x:{stacked:true,grid:{display:false},ticks:{color:'#5C6886',font:{size:10}}},
-        y:{stacked:true,grid:{color:CP.bg_grid},ticks:{callback:v=>'£'+(v/1000).toFixed(0)+'K',color:'#5C6886',font:{size:9}}}}}
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{color:CP.tick,font:{size:10}}},
+        y:{stacked:true,grid:{color:CP.bg_grid},ticks:{callback:v=>'£'+(v/1000).toFixed(0)+'K',color:CP.tick,font:{size:9}}}}}
   });
 }
 
@@ -2649,86 +2951,86 @@ function initCharts(pid){
       ['Q10 Workflow Saving Valued','Q12 Consistent Quality Important','Q13 Cloning Useful','Q18 Likely to Adopt','Q15 Auto-Improve Interest','Q17 Onboarding Benefit','Q16 Failure Forensics Valuable','Q21 Beta Interest (Yes+Maybe)','Q7 AI Inconsistency (Sometimes+)','Q9 No Std Process','Q11 Knowledge Loss (Freq+Occ)'],
       [87.4, 87.4, 88.9, 85.5, 83.6, 87.4, 80.7, 86.4, 75.8, 56.5, 68.1],
       ['rgba(79,70,229,0.85)','rgba(99,91,255,0.78)','rgba(31,179,122,0.82)','rgba(31,179,122,0.9)','rgba(99,91,255,0.78)','rgba(8,145,178,0.72)','rgba(99,91,255,0.72)','rgba(245,158,11,0.78)','rgba(223,27,65,0.7)','rgba(223,27,65,0.65)','rgba(245,158,11,0.65)'],
-      {indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+'%'}}},scales:{x:{beginAtZero:true,max:100,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},y:{grid:{display:false},ticks:{color:'#5C6886',font:{size:8}}}}}
+      {indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.x+'%'}}},scales:{x:{beginAtZero:true,max:100,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},y:{grid:{display:false},ticks:{color:CP.tick,font:{size:8}}}}}
     );
-    CI.rev=mkBar('c-rev',['Year 1','Year 2','Year 3'],[97820,445905,905980],['rgba(99,91,255,0.55)','rgba(99,91,255,0.75)','rgba(79,70,229,0.9)'],{scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{callback:v=>'£'+(v/1000).toFixed(0)+'K',color:'#5C6886',font:{size:9}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:11}}}}});
+    CI.rev=mkBar('c-rev',['Year 1','Year 2','Year 3'],[97820,445905,905980],['rgba(99,91,255,0.55)','rgba(99,91,255,0.75)','rgba(79,70,229,0.9)'],{scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{callback:v=>'£'+(v/1000).toFixed(0)+'K',color:CP.tick,font:{size:9}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:11}}}}});
     CI.adopt=mkDoughnut('c-adopt',['Superficial','Structurally Embedded'],[54,16],['rgba(245,158,11,0.72)','rgba(79,70,229,0.88)']);
-    CI.pain=mkBar('c-pain',['Inconsistent','No Workflows','Hallucinations','Privacy','Training'],[28.2,27.5,22.6,17.6,11.3],['rgba(79,70,229,0.82)','rgba(99,91,255,0.72)','rgba(223,27,65,0.65)','rgba(245,158,11,0.65)','rgba(8,145,178,0.65)'],{indexAxis:'y',scales:{x:{beginAtZero:true,max:35,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},y:{grid:{display:false},ticks:{color:'#5C6886',font:{size:9}}}}});
-    CI.pilot=mkBar('c-pilot',['Task Speed ↑','Hallucn ↓','Onboard','User Score'],[28,18,69,86],['rgba(79,70,229,0.9)','rgba(31,179,122,0.85)','rgba(99,91,255,0.8)','rgba(245,158,11,0.75)'],{scales:{y:{beginAtZero:true,max:100,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:9}}}}});
+    CI.pain=mkBar('c-pain',['Inconsistent','No Workflows','Hallucinations','Privacy','Training'],[28.2,27.5,22.6,17.6,11.3],['rgba(79,70,229,0.82)','rgba(99,91,255,0.72)','rgba(223,27,65,0.65)','rgba(245,158,11,0.65)','rgba(8,145,178,0.65)'],{indexAxis:'y',scales:{x:{beginAtZero:true,max:35,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},y:{grid:{display:false},ticks:{color:CP.tick,font:{size:9}}}}});
+    CI.pilot=mkBar('c-pilot',['Task Speed ↑','Hallucn ↓','Onboard','User Score'],[28,18,69,86],['rgba(79,70,229,0.9)','rgba(31,179,122,0.85)','rgba(99,91,255,0.8)','rgba(245,158,11,0.75)'],{scales:{y:{beginAtZero:true,max:100,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:9}}}}});
   }
   if(pid==='problem'){
-    CI.paradox=mkBar('c-paradox',['Expected Gain','Actual Result (RCT 2025)'],[24,-19],['rgba(99,91,255,0.75)','rgba(223,27,65,0.72)'],{scales:{y:{grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:10}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:10}}}}});
+    CI.paradox=mkBar('c-paradox',['Expected Gain','Actual Result (RCT 2025)'],[24,-19],['rgba(99,91,255,0.75)','rgba(223,27,65,0.72)'],{scales:{y:{grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:10}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:10}}}}});
   }
   if(pid==='solution'){
-    CI.radar=mkChart('c-radar',{type:'radar',data:{labels:['Intent Capture','Workflow Synthesis','Multi-model Exec','PFFE Forensics','Logic Cloning','OLM Memory'],datasets:[{label:'PromptOps AI',data:[95,88,90,92,87,85],borderColor:CP.v3,backgroundColor:'rgba(99,91,255,0.1)',pointBackgroundColor:CP.v3,borderWidth:2.5},{label:'Generic Tools',data:[50,20,60,5,10,5],borderColor:'rgba(245,158,11,0.6)',backgroundColor:'rgba(245,158,11,0.05)',pointBackgroundColor:CP.warn,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}},scales:{r:{grid:{color:'rgba(99,91,255,0.1)'},ticks:{backdropColor:'transparent',color:'#5C6886',font:{size:8}},pointLabels:{color:'#5C6886',font:{size:9}}}}}});
-    CI.onboard=mkBar('c-onboard',['Historical Avg','PromptOps AI'],[45,14],['rgba(223,27,65,0.7)','rgba(31,179,122,0.85)'],{scales:{y:{beginAtZero:true,max:55,grid:{color:CP.bg_grid},ticks:{callback:v=>v+' days',color:'#5C6886',font:{size:9}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:10}}}}});
+    CI.radar=mkChart('c-radar',{type:'radar',data:{labels:['Intent Capture','Workflow Synthesis','Multi-model Exec','PFFE Forensics','Logic Cloning','OLM Memory'],datasets:[{label:'PromptOps AI',data:[95,88,90,92,87,85],borderColor:CP.v3,backgroundColor:'rgba(99,91,255,0.1)',pointBackgroundColor:CP.v3,borderWidth:2.5},{label:'Generic Tools',data:[50,20,60,5,10,5],borderColor:'rgba(245,158,11,0.6)',backgroundColor:'rgba(245,158,11,0.05)',pointBackgroundColor:CP.warn,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}},scales:{r:{grid:{color:'rgba(99,91,255,0.1)'},ticks:{backdropColor:'transparent',color:CP.tick,font:{size:8}},pointLabels:{color:CP.tick,font:{size:9}}}}}});
+    CI.onboard=mkBar('c-onboard',['Historical Avg','PromptOps AI'],[45,14],['rgba(223,27,65,0.7)','rgba(31,179,122,0.85)'],{scales:{y:{beginAtZero:true,max:55,grid:{color:CP.bg_grid},ticks:{callback:v=>v+' days',color:CP.tick,font:{size:9}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:10}}}}});
   }
   if(pid==='market'){
     // Keep originals that other pages may reference
-    CI.market=mkBar('c-market',['IT & Software','Advertising','Other Creative'],[62.4,24.3,59.1],['rgba(79,70,229,0.88)','rgba(99,91,255,0.75)','rgba(99,91,255,0.55)'],{scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{callback:v=>'£'+v+'B',color:'#5C6886',font:{size:9}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:9}}}}});
+    CI.market=mkBar('c-market',['IT & Software','Advertising','Other Creative'],[62.4,24.3,59.1],['rgba(79,70,229,0.88)','rgba(99,91,255,0.75)','rgba(99,91,255,0.55)'],{scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{callback:v=>'£'+v+'B',color:CP.tick,font:{size:9}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:9}}}}});
 
     // ── Q1: Industry (PDF data: SaaS 44.9%, Consulting 31.4%, IT Services 16.9%, R&D 6.8%)
-    CI.q1=mkChart('c-q1-industry',{type:'doughnut',data:{labels:['SaaS / Product Co.','Consulting','IT Services','R&D'],datasets:[{data:[44.9,31.4,16.9,6.8],backgroundColor:['rgba(79,70,229,0.88)','rgba(99,91,255,0.75)','rgba(8,145,178,0.72)','rgba(245,158,11,0.68)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q1=mkChart('c-q1-industry',{type:'doughnut',data:{labels:['SaaS / Product Co.','Consulting','IT Services','R&D'],datasets:[{data:[44.9,31.4,16.9,6.8],backgroundColor:['rgba(79,70,229,0.88)','rgba(99,91,255,0.75)','rgba(8,145,178,0.72)','rgba(245,158,11,0.68)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q2: Employee size (PDF: 1-5=29%, 6-20=23.2%, 21-50=17.9%, 51-200=22.7%, 200+=7.2%)
-    CI.q2=mkChart('c-q2-size',{type:'pie',data:{labels:['1–5','6–20','21–50','51–200','200+'],datasets:[{data:[29,23.2,17.9,22.7,7.2],backgroundColor:['rgba(8,145,178,0.65)','rgba(99,91,255,0.72)','rgba(79,70,229,0.85)','rgba(99,91,255,0.78)','rgba(245,158,11,0.7)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q2=mkChart('c-q2-size',{type:'pie',data:{labels:['1–5','6–20','21–50','51–200','200+'],datasets:[{data:[29,23.2,17.9,22.7,7.2],backgroundColor:['rgba(8,145,178,0.65)','rgba(99,91,255,0.72)','rgba(79,70,229,0.85)','rgba(99,91,255,0.78)','rgba(245,158,11,0.7)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q3: Role (PDF: Team lead 27.5%, Technical/Eng 25.1%, Founder/CEO 15.9%, Ops Mgr 16.9%, Developer 14.5%)
-    CI.q3=mkChart('c-q3-role',{type:'doughnut',data:{labels:['Team Lead','Technical / Eng','Ops Manager','Founder / CEO','Developer'],datasets:[{data:[27.5,25.1,16.9,15.9,14.5],backgroundColor:['rgba(79,70,229,0.9)','rgba(99,91,255,0.78)','rgba(8,145,178,0.72)','rgba(99,91,255,0.65)','rgba(245,158,11,0.68)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q3=mkChart('c-q3-role',{type:'doughnut',data:{labels:['Team Lead','Technical / Eng','Ops Manager','Founder / CEO','Developer'],datasets:[{data:[27.5,25.1,16.9,15.9,14.5],backgroundColor:['rgba(79,70,229,0.9)','rgba(99,91,255,0.78)','rgba(8,145,178,0.72)','rgba(99,91,255,0.65)','rgba(245,158,11,0.68)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q4: AI Frequency (PDF: Daily 51.2%, Several/week 25.6%, Occasionally 16.9%, Testing 0%, Not yet 6.3%)
-    CI.q4=mkChart('c-q4-freq',{type:'pie',data:{labels:['Daily','Several/Week','Occasionally','Testing Phase','Not Yet'],datasets:[{data:[51.2,25.6,16.9,3.4,2.9],backgroundColor:['rgba(79,70,229,0.9)','rgba(99,91,255,0.78)','rgba(8,145,178,0.7)','rgba(245,158,11,0.65)','rgba(223,27,65,0.55)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q4=mkChart('c-q4-freq',{type:'pie',data:{labels:['Daily','Several/Week','Occasionally','Testing Phase','Not Yet'],datasets:[{data:[51.2,25.6,16.9,3.4,2.9],backgroundColor:['rgba(79,70,229,0.9)','rgba(99,91,255,0.78)','rgba(8,145,178,0.7)','rgba(245,158,11,0.65)','rgba(223,27,65,0.55)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q5: Use Cases (PDF: Coding/Dev 24.6%, Research/Analysis 19.3%, Workflow Auto 15%, Reporting/Docs 15%, Consulting 10.1%, Client Comms 8.7%, Strategic 7.3%)
-    CI.q5=mkBar('c-q5-usecases',['Coding / Dev','Research','Workflow Auto','Reporting / Docs','Consulting','Client Comms','Strategic'],[24.6,19.3,15,15,10.1,8.7,7.3],['rgba(79,70,229,0.9)','rgba(99,91,255,0.8)','rgba(99,91,255,0.75)','rgba(8,145,178,0.72)','rgba(245,158,11,0.7)','rgba(31,179,122,0.68)','rgba(223,27,65,0.6)'],{indexAxis:'y',scales:{x:{beginAtZero:true,max:28,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},y:{grid:{display:false},ticks:{color:'#5C6886',font:{size:9}}}}});
+    CI.q5=mkBar('c-q5-usecases',['Coding / Dev','Research','Workflow Auto','Reporting / Docs','Consulting','Client Comms','Strategic'],[24.6,19.3,15,15,10.1,8.7,7.3],['rgba(79,70,229,0.9)','rgba(99,91,255,0.8)','rgba(99,91,255,0.75)','rgba(8,145,178,0.72)','rgba(245,158,11,0.7)','rgba(31,179,122,0.68)','rgba(223,27,65,0.6)'],{indexAxis:'y',scales:{x:{beginAtZero:true,max:28,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},y:{grid:{display:false},ticks:{color:CP.tick,font:{size:9}}}}});
 
     // ── Q6: Time correcting AI (PDF: <30min 7.7%, 30-60min 16.4%, 1-3hrs 53.1%, 3-5hrs 17.9%, >5hrs 4.9%)
-    CI.q6=mkBar('c-q6-time',['< 30 min','30–60 min','1–3 hours','3–5 hours','> 5 hours'],[7.7,16.4,53.1,17.9,4.9],['rgba(31,179,122,0.7)','rgba(99,91,255,0.72)','rgba(79,70,229,0.9)','rgba(245,158,11,0.72)','rgba(223,27,65,0.7)'],{scales:{y:{beginAtZero:true,max:60,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:9}}}}});
+    CI.q6=mkBar('c-q6-time',['< 30 min','30–60 min','1–3 hours','3–5 hours','> 5 hours'],[7.7,16.4,53.1,17.9,4.9],['rgba(31,179,122,0.7)','rgba(99,91,255,0.72)','rgba(79,70,229,0.9)','rgba(245,158,11,0.72)','rgba(223,27,65,0.7)'],{scales:{y:{beginAtZero:true,max:60,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:9}}}}});
 
     // ── Q7: Inconsistency (PDF: Very Often 19.3%, Sometimes 56.5%, Rarely 19.8%, Never ~4.4%)
-    CI.q7=mkChart('c-q7-inconsist',{type:'doughnut',data:{labels:['Sometimes','Rarely','Very Often','Never'],datasets:[{data:[56.5,19.8,19.3,4.4],backgroundColor:['rgba(245,158,11,0.78)','rgba(79,70,229,0.72)','rgba(223,27,65,0.82)','rgba(31,179,122,0.68)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q7=mkChart('c-q7-inconsist',{type:'doughnut',data:{labels:['Sometimes','Rarely','Very Often','Never'],datasets:[{data:[56.5,19.8,19.3,4.4],backgroundColor:['rgba(245,158,11,0.78)','rgba(79,70,229,0.72)','rgba(223,27,65,0.82)','rgba(31,179,122,0.68)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q8: Biggest Challenges (PDF: Inconsistent 26.1%, No std workflows 22.7%, Hallucinations ~19.8%, Training ~11.6%)
-    CI.q8=mkBar('c-q8-challenges',['Inconsistent Outputs','No Standardisation','Hallucinations','Prompt Difficulty','Team Training','Data Privacy','Scaling AI'],[26.1,22.7,19.8,11.6,9.7,6.3,3.8],['rgba(223,27,65,0.78)','rgba(245,158,11,0.74)','rgba(79,70,229,0.85)','rgba(99,91,255,0.72)','rgba(8,145,178,0.68)','rgba(99,91,255,0.6)','rgba(31,179,122,0.55)'],{indexAxis:'y',scales:{x:{beginAtZero:true,max:30,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},y:{grid:{display:false},ticks:{color:'#5C6886',font:{size:8}}}}});
+    CI.q8=mkBar('c-q8-challenges',['Inconsistent Outputs','No Standardisation','Hallucinations','Prompt Difficulty','Team Training','Data Privacy','Scaling AI'],[26.1,22.7,19.8,11.6,9.7,6.3,3.8],['rgba(223,27,65,0.78)','rgba(245,158,11,0.74)','rgba(79,70,229,0.85)','rgba(99,91,255,0.72)','rgba(8,145,178,0.68)','rgba(99,91,255,0.6)','rgba(31,179,122,0.55)'],{indexAxis:'y',scales:{x:{beginAtZero:true,max:30,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},y:{grid:{display:false},ticks:{color:CP.tick,font:{size:8}}}}});
 
     // ── Q9: Standardised process (PDF: No 56.5%, Yes 25.6%, Partially 17.9%)
-    CI.q9=mkChart('c-q9-standard',{type:'pie',data:{labels:['No','Yes','Partially'],datasets:[{data:[56.5,25.6,17.9],backgroundColor:['rgba(223,27,65,0.78)','rgba(31,179,122,0.82)','rgba(245,158,11,0.72)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q9=mkChart('c-q9-standard',{type:'pie',data:{labels:['No','Yes','Partially'],datasets:[{data:[56.5,25.6,17.9],backgroundColor:['rgba(223,27,65,0.78)','rgba(31,179,122,0.82)','rgba(245,158,11,0.72)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q10: Workflow saving value (PDF: Extremely valuable 53.1%, Valuable 34.3%, Neutral 9.7%, Slightly 2.9%)
-    CI.q10=mkChart('c-q10-value',{type:'doughnut',data:{labels:['Extremely Valuable','Valuable','Neutral','Slightly'],datasets:[{data:[53.1,34.3,9.7,2.9],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.82)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q10=mkChart('c-q10-value',{type:'doughnut',data:{labels:['Extremely Valuable','Valuable','Neutral','Slightly'],datasets:[{data:[53.1,34.3,9.7,2.9],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.82)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q11: Knowledge loss (PDF: Frequently 28%, Occasionally 40.1%, Rarely 23.2%, Never 8.7%)
-    CI.q11=mkChart('c-q11-kloss',{type:'pie',data:{labels:['Occasionally','Frequently','Rarely','Never'],datasets:[{data:[40.1,28,23.2,8.7],backgroundColor:['rgba(245,158,11,0.78)','rgba(223,27,65,0.75)','rgba(99,91,255,0.7)','rgba(31,179,122,0.65)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q11=mkChart('c-q11-kloss',{type:'pie',data:{labels:['Occasionally','Frequently','Rarely','Never'],datasets:[{data:[40.1,28,23.2,8.7],backgroundColor:['rgba(245,158,11,0.78)','rgba(223,27,65,0.75)','rgba(99,91,255,0.7)','rgba(31,179,122,0.65)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q12: Consistent quality (PDF: Extremely important 58.9%, Important 28.5%, Neutral 8.7%, Not important ~3.9%)
-    CI.q12=mkChart('c-q12-quality',{type:'doughnut',data:{labels:['Extremely Important','Important','Neutral','Not Important'],datasets:[{data:[58.9,28.5,8.7,3.9],backgroundColor:['rgba(79,70,229,0.9)','rgba(99,91,255,0.78)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q12=mkChart('c-q12-quality',{type:'doughnut',data:{labels:['Extremely Important','Important','Neutral','Not Important'],datasets:[{data:[58.9,28.5,8.7,3.9],backgroundColor:['rgba(79,70,229,0.9)','rgba(99,91,255,0.78)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q13: Workflow cloning utility (PDF: Extremely useful 48.8%, Useful 40.1%, Neutral 8.7%, Not useful 2.4%)
-    CI.q13=mkChart('c-q13-clone',{type:'pie',data:{labels:['Extremely Useful','Useful','Neutral','Not Useful'],datasets:[{data:[48.8,40.1,8.7,2.4],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.82)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q13=mkChart('c-q13-clone',{type:'pie',data:{labels:['Extremely Useful','Useful','Neutral','Not Useful'],datasets:[{data:[48.8,40.1,8.7,2.4],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.82)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q14: Features (PDF: Prompt libs ~19.3%, Workflow cloning ~18.4%, AI analytics 16.4%, Hallucin reduction 13%, Knowledge retention 12.1%, Auto workflow 10%, AI scoring 6%, Compliance 4.8%)
-    CI.q14=mkBar('c-q14-features',['Prompt Libraries','Workflow Cloning','AI Analytics','Hallucin. Reduction','Knowledge Retention','Auto Workflow Gen','AI Perf Scoring','Compliance Monitor'],[19.3,18.4,16.4,13,12.1,10,6,4.8],['rgba(79,70,229,0.9)','rgba(99,91,255,0.82)','rgba(8,145,178,0.78)','rgba(223,27,65,0.72)','rgba(31,179,122,0.75)','rgba(245,158,11,0.7)','rgba(99,91,255,0.65)','rgba(99,91,255,0.55)'],{indexAxis:'y',scales:{x:{beginAtZero:true,max:22,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},y:{grid:{display:false},ticks:{color:'#5C6886',font:{size:8}}}}});
+    CI.q14=mkBar('c-q14-features',['Prompt Libraries','Workflow Cloning','AI Analytics','Hallucin. Reduction','Knowledge Retention','Auto Workflow Gen','AI Perf Scoring','Compliance Monitor'],[19.3,18.4,16.4,13,12.1,10,6,4.8],['rgba(79,70,229,0.9)','rgba(99,91,255,0.82)','rgba(8,145,178,0.78)','rgba(223,27,65,0.72)','rgba(31,179,122,0.75)','rgba(245,158,11,0.7)','rgba(99,91,255,0.65)','rgba(99,91,255,0.55)'],{indexAxis:'y',scales:{x:{beginAtZero:true,max:22,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},y:{grid:{display:false},ticks:{color:CP.tick,font:{size:8}}}}});
 
     // ── Q15: Auto-improve (PDF: Yes definitely 57.5%, Maybe 26.1%, Not sure 11.1%, No ~5.3%)
-    CI.q15=mkChart('c-q15-autoimprove',{type:'doughnut',data:{labels:['Yes, Definitely','Maybe','Not Sure','No'],datasets:[{data:[57.5,26.1,11.1,5.3],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.78)','rgba(245,158,11,0.68)','rgba(223,27,65,0.55)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q15=mkChart('c-q15-autoimprove',{type:'doughnut',data:{labels:['Yes, Definitely','Maybe','Not Sure','No'],datasets:[{data:[57.5,26.1,11.1,5.3],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.78)','rgba(245,158,11,0.68)','rgba(223,27,65,0.55)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q16: Failure forensics value (PDF: Extremely valuable 43.5%, Valuable 37.2%, Neutral 15.5%, Not valuable ~3.8%)
-    CI.q16=mkChart('c-q16-forensics',{type:'pie',data:{labels:['Extremely Valuable','Valuable','Neutral','Not Valuable'],datasets:[{data:[43.5,37.2,15.5,3.8],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.82)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q16=mkChart('c-q16-forensics',{type:'pie',data:{labels:['Extremely Valuable','Valuable','Neutral','Not Valuable'],datasets:[{data:[43.5,37.2,15.5,3.8],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.82)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q17: Onboarding benefit (PDF: Significantly 51.2%, Moderately 36.2%, Slightly ~9.7%, Not at all ~2.9%)
-    CI.q17=mkChart('c-q17-onboard',{type:'doughnut',data:{labels:['Significantly','Moderately','Slightly','Not at All'],datasets:[{data:[51.2,36.2,9.7,2.9],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.82)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q17=mkChart('c-q17-onboard',{type:'doughnut',data:{labels:['Significantly','Moderately','Slightly','Not at All'],datasets:[{data:[51.2,36.2,9.7,2.9],backgroundColor:['rgba(31,179,122,0.9)','rgba(79,70,229,0.82)','rgba(245,158,11,0.65)','rgba(223,27,65,0.5)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q18: Adoption likelihood (PDF: Likely 49.3%, Very Likely 36.2%, Maybe ~11.1%, Unlikely ~2.9%, Very unlikely ~0.5%)
-    CI.q18=mkChart('c-q18-adopt',{type:'pie',data:{labels:['Likely','Very Likely','Maybe','Unlikely','Very Unlikely'],datasets:[{data:[49.3,36.2,11.1,2.9,0.5],backgroundColor:['rgba(79,70,229,0.88)','rgba(31,179,122,0.85)','rgba(245,158,11,0.7)','rgba(223,27,65,0.6)','rgba(99,91,255,0.45)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q18=mkChart('c-q18-adopt',{type:'pie',data:{labels:['Likely','Very Likely','Maybe','Unlikely','Very Unlikely'],datasets:[{data:[49.3,36.2,11.1,2.9,0.5],backgroundColor:['rgba(79,70,229,0.88)','rgba(31,179,122,0.85)','rgba(245,158,11,0.7)','rgba(223,27,65,0.6)','rgba(99,91,255,0.45)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q19: Pricing model (PDF: Monthly sub 52.7%, Annual sub 16.4%, Pay per use 17.9%, Enterprise 9.7%, One-time ~3.3%)
-    CI.q19=mkChart('c-q19-pricing',{type:'doughnut',data:{labels:['Monthly Sub','Annual Sub','Pay per Use','Enterprise','One-time'],datasets:[{data:[52.7,17.9,16.4,9.7,3.3],backgroundColor:['rgba(79,70,229,0.9)','rgba(99,91,255,0.78)','rgba(8,145,178,0.72)','rgba(245,158,11,0.68)','rgba(99,91,255,0.55)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}}}});
+    CI.q19=mkChart('c-q19-pricing',{type:'doughnut',data:{labels:['Monthly Sub','Annual Sub','Pay per Use','Enterprise','One-time'],datasets:[{data:[52.7,17.9,16.4,9.7,3.3],backgroundColor:['rgba(79,70,229,0.9)','rgba(99,91,255,0.78)','rgba(8,145,178,0.72)','rgba(245,158,11,0.68)','rgba(99,91,255,0.55)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}}}});
 
     // ── Q20: Budget (PDF: <£50 9.7%, £50-100 7.7%, £100-250 24.6%, £250-500 41.5%, £500+ 16.4%)
-    CI.q20=mkBar('c-q20-budget',['Under £50','£50–£100','£100–£250','£250–£500','£500+'],[9.7,7.7,24.6,41.5,16.4],['rgba(8,145,178,0.55)','rgba(99,91,255,0.65)','rgba(99,91,255,0.8)','rgba(79,70,229,0.92)','rgba(245,158,11,0.78)'],{scales:{y:{beginAtZero:true,max:48,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:9}}}}});
+    CI.q20=mkBar('c-q20-budget',['Under £50','£50–£100','£100–£250','£250–£500','£500+'],[9.7,7.7,24.6,41.5,16.4],['rgba(8,145,178,0.55)','rgba(99,91,255,0.65)','rgba(99,91,255,0.8)','rgba(79,70,229,0.92)','rgba(245,158,11,0.78)'],{scales:{y:{beginAtZero:true,max:48,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:9}}}}});
 
     // ── Q21: Beta interest (PDF: Yes 61.8%, Maybe 24.6%, No 13.5%)
-    CI.q21=mkChart('c-q21-beta',{type:'pie',data:{labels:['Yes','Maybe','No'],datasets:[{data:[61.8,24.6,13.5],backgroundColor:['rgba(31,179,122,0.9)','rgba(245,158,11,0.75)','rgba(223,27,65,0.6)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:10},boxWidth:10}}}}});
+    CI.q21=mkChart('c-q21-beta',{type:'pie',data:{labels:['Yes','Maybe','No'],datasets:[{data:[61.8,24.6,13.5],backgroundColor:['rgba(31,179,122,0.9)','rgba(245,158,11,0.75)','rgba(223,27,65,0.6)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:10},boxWidth:10}}}}});
   }
   if(pid==='financials'){
     CI.revstream=mkStackedBar('c-revstream',['Year 1','Year 2','Year 3'],[
@@ -2739,19 +3041,19 @@ function initCharts(pid){
     ]);
     CI.profit=mkLine('c-profit',['Y1','Y2','Y3'],[11225,123134,275203],'rgba(31,179,122,1)','rgba(31,179,122,0.07)');
     CI.margin=mkLine('c-margin',['Y1','Y2','Y3'],[11.48,27.61,30.38],'rgba(99,91,255,1)','rgba(99,91,255,0.06)');
-    CI.roe=mkBar('c-roe',['Y1','Y2','Y3'],[18.33,66.79,59.88],['rgba(165,160,255,0.7)','rgba(99,91,255,0.8)','rgba(79,70,229,0.92)'],{scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:10}}}}});
+    CI.roe=mkBar('c-roe',['Y1','Y2','Y3'],[18.33,66.79,59.88],['rgba(165,160,255,0.7)','rgba(99,91,255,0.8)','rgba(79,70,229,0.92)'],{scales:{y:{beginAtZero:true,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:10}}}}});
     CI.cash=mkLine('c-cash',['Y1','Y2','Y3'],[39625,165159,442762],'rgba(99,91,255,1)','rgba(99,91,255,0.07)');
-    CI.gp=mkBar('c-gp',['Y1','Y2','Y3'],[40.12,47.09,47.54],['rgba(8,145,178,0.68)','rgba(8,145,178,0.8)','rgba(8,145,178,0.95)'],{scales:{y:{beginAtZero:true,max:55,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:'#5C6886',font:{size:9}}},x:{grid:{display:false},ticks:{color:'#5C6886',font:{size:10}}}}});
+    CI.gp=mkBar('c-gp',['Y1','Y2','Y3'],[40.12,47.09,47.54],['rgba(8,145,178,0.68)','rgba(8,145,178,0.8)','rgba(8,145,178,0.95)'],{scales:{y:{beginAtZero:true,max:55,grid:{color:CP.bg_grid},ticks:{callback:v=>v+'%',color:CP.tick,font:{size:9}}},x:{grid:{display:false},ticks:{color:CP.tick,font:{size:10}}}}});
     CI.assets=mkLine('c-assets',['Y1','Y2','Y3'],[61225,184359,459562],'rgba(245,158,11,1)','rgba(245,158,11,0.06)');
   }
   if(pid==='growth'){
     CI.clients=mkLine('c-clients',['Month 4','Month 6','Month 8','Month 10','Month 12'],[5,15,35,60,75],'rgba(99,91,255,1)','rgba(99,91,255,0.08)');
   }
   if(pid==='founder'){
-    CI.founderRadar=mkChart('c-founder-radar',{type:'radar',data:{labels:['Technical Depth','Domain Insight','Market Understanding','Product Execution','Business Acumen'],datasets:[{label:'Naveen',data:[92,88,85,87,82],borderColor:'rgba(99,91,255,1)',backgroundColor:'rgba(99,91,255,0.12)',pointBackgroundColor:'rgba(99,91,255,1)',borderWidth:2.5},{label:'Typical Founder',data:[55,45,50,60,55],borderColor:'rgba(245,158,11,0.6)',backgroundColor:'rgba(245,158,11,0.05)',pointBackgroundColor:'rgba(245,158,11,0.8)',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}},scales:{r:{grid:{color:'rgba(99,91,255,0.1)'},ticks:{backdropColor:'transparent',color:'#5C6886',font:{size:8}},pointLabels:{color:'#5C6886',font:{size:9}}}}}});
+    CI.founderRadar=mkChart('c-founder-radar',{type:'radar',data:{labels:['Technical Depth','Domain Insight','Market Understanding','Product Execution','Business Acumen'],datasets:[{label:'Naveen',data:[92,88,85,87,82],borderColor:'rgba(99,91,255,1)',backgroundColor:'rgba(99,91,255,0.12)',pointBackgroundColor:'rgba(99,91,255,1)',borderWidth:2.5},{label:'Typical Founder',data:[55,45,50,60,55],borderColor:'rgba(245,158,11,0.6)',backgroundColor:'rgba(245,158,11,0.05)',pointBackgroundColor:'rgba(245,158,11,0.8)',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}},scales:{r:{grid:{color:'rgba(99,91,255,0.1)'},ticks:{backdropColor:'transparent',color:CP.tick,font:{size:8}},pointLabels:{color:CP.tick,font:{size:9}}}}}});
   }
   if(pid==='moat'){
-    CI.moatRadar=mkChart('c-moat-radar',{type:'radar',data:{labels:['Intent Capture','Outcome Attribution','Failure Forensics','Logic Cloning','UK Benchmarking','Federated Learning','SME Pricing'],datasets:[{label:'PromptOps AI',data:[95,92,90,88,94,87,91],borderColor:'rgba(99,91,255,1)',backgroundColor:'rgba(99,91,255,0.12)',pointBackgroundColor:'rgba(99,91,255,1)',borderWidth:2.5},{label:'OpenAI/Claude Enterprise',data:[70,25,10,20,5,10,15],borderColor:'rgba(245,158,11,0.6)',backgroundColor:'rgba(245,158,11,0.05)',pointBackgroundColor:'rgba(245,158,11,0.8)',borderWidth:2},{label:'Zapier/Make.com',data:[40,15,5,10,5,5,60],borderColor:'rgba(8,145,178,0.6)',backgroundColor:'rgba(8,145,178,0.03)',pointBackgroundColor:'rgba(8,145,178,0.8)',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:'#5C6886',font:{size:9},boxWidth:10}}},scales:{r:{grid:{color:'rgba(99,91,255,0.1)'},ticks:{backdropColor:'transparent',color:'#5C6886',font:{size:7},stepSize:20},pointLabels:{color:'#5C6886',font:{size:8}}}}}});
+    CI.moatRadar=mkChart('c-moat-radar',{type:'radar',data:{labels:['Intent Capture','Outcome Attribution','Failure Forensics','Logic Cloning','UK Benchmarking','Federated Learning','SME Pricing'],datasets:[{label:'PromptOps AI',data:[95,92,90,88,94,87,91],borderColor:'rgba(99,91,255,1)',backgroundColor:'rgba(99,91,255,0.12)',pointBackgroundColor:'rgba(99,91,255,1)',borderWidth:2.5},{label:'OpenAI/Claude Enterprise',data:[70,25,10,20,5,10,15],borderColor:'rgba(245,158,11,0.6)',backgroundColor:'rgba(245,158,11,0.05)',pointBackgroundColor:'rgba(245,158,11,0.8)',borderWidth:2},{label:'Zapier/Make.com',data:[40,15,5,10,5,5,60],borderColor:'rgba(8,145,178,0.6)',backgroundColor:'rgba(8,145,178,0.03)',pointBackgroundColor:'rgba(8,145,178,0.8)',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{color:CP.tick,font:{size:9},boxWidth:10}}},scales:{r:{grid:{color:'rgba(99,91,255,0.1)'},ticks:{backdropColor:'transparent',color:CP.tick,font:{size:7},stepSize:20},pointLabels:{color:CP.tick,font:{size:8}}}}}});
   }
 }
 
