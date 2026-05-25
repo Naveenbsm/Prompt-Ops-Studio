@@ -123,7 +123,7 @@ export default function PerformancePage() {
 
         <SectionCard
           title="Logic Score over time"
-          description="Composite score across Legal, Consulting and IT Services practices."
+          description="Composite score across Senior Devs, Consulting and IT Services practices."
         >
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
@@ -135,8 +135,8 @@ export default function PerformancePage() {
                 <Legend wrapperStyle={{ fontSize: 12 }} />
                 <Line
                   type="monotone"
-                  dataKey="legal"
-                  name="Legal"
+                  dataKey="seniorDevs"
+                  name="Senior Devs"
                   stroke={chartPalette.indigo}
                   strokeWidth={2.5}
                   dot={{ r: 3 }}

@@ -285,6 +285,8 @@ export const integrations: Integration[] = [
   { id: "salesforce", name: "Salesforce", description: "Bidirectional sync for CRM records and DNA outcomes.", category: "CRM", connected: false, color: "bg-sky-500" },
   { id: "sharepoint", name: "SharePoint", description: "Archive forensic logs and compliance evidence packs.", category: "Storage", connected: true, color: "bg-blue-700" },
   { id: "notion", name: "Notion", description: "Auto-create matter notes and brief pages from DNA.", category: "Docs", connected: false, color: "bg-neutral-800" },
+  { id: "claude", name: "Claude", description: "Run DNA workflows through Claude for advanced AI reasoning and analysis.", category: "AI", connected: false, color: "bg-[#D97757]" },
+  { id: "chatgpt", name: "ChatGPT", description: "Connect DNA sequences to ChatGPT for generative outputs and automation.", category: "AI", connected: false, color: "bg-emerald-600" },
 ];
 
 export const invoices: Invoice[] = [
@@ -297,17 +299,17 @@ export const invoices: Invoice[] = [
 ];
 
 export const teamPerformers: TeamPerformer[] = [
-  { id: "p1", name: "Maya Patel", role: "DNA Architect", team: "Legal", score: 98, workflowsOwned: 12, trend: 6 },
+  { id: "p1", name: "Maya Patel", role: "DNA Architect", team: "Senior Devs", score: 98, workflowsOwned: 12, trend: 6 },
   { id: "p2", name: "Aisha Khan", role: "Support Lead", team: "Customer Success", score: 95, workflowsOwned: 9, trend: 4 },
   { id: "p3", name: "Sofia Reyes", role: "Tax Advisory Lead", team: "Consulting", score: 92, workflowsOwned: 7, trend: 8 },
   { id: "p4", name: "Yuki Tanaka", role: "Compliance Engineer", team: "Compliance", score: 91, workflowsOwned: 6, trend: 3 },
   { id: "p5", name: "Daniel Cho", role: "CS Manager", team: "Customer Success", score: 87, workflowsOwned: 5, trend: -2 },
   { id: "p6", name: "Priya Shah", role: "Brand Strategist", team: "Creative", score: 84, workflowsOwned: 4, trend: 5 },
-  { id: "p7", name: "Noah Bennett", role: "Legal Ops", team: "Legal", score: 80, workflowsOwned: 3, trend: 1 },
+  { id: "p7", name: "Noah Bennett", role: "Senior Dev Lead", team: "Senior Devs", score: 80, workflowsOwned: 3, trend: 1 },
 ];
 
 export const performanceByTeam = [
-  { team: "Legal", score: 94 },
+  { team: "Senior Devs", score: 94 },
   { team: "Compliance", score: 92 },
   { team: "Consulting", score: 87 },
   { team: "Customer Success", score: 84 },
@@ -318,12 +320,12 @@ export const performanceByTeam = [
 ];
 
 export const performanceOverTime = [
-  { month: "Dec", legal: 82, consulting: 70, itServices: 75 },
-  { month: "Jan", legal: 84, consulting: 73, itServices: 78 },
-  { month: "Feb", legal: 86, consulting: 76, itServices: 81 },
-  { month: "Mar", legal: 88, consulting: 79, itServices: 84 },
-  { month: "Apr", legal: 91, consulting: 83, itServices: 88 },
-  { month: "May", legal: 94, consulting: 87, itServices: 90 },
+  { month: "Dec", seniorDevs: 82, consulting: 70, itServices: 75 },
+  { month: "Jan", seniorDevs: 84, consulting: 73, itServices: 78 },
+  { month: "Feb", seniorDevs: 86, consulting: 76, itServices: 81 },
+  { month: "Mar", seniorDevs: 88, consulting: 79, itServices: 84 },
+  { month: "Apr", seniorDevs: 91, consulting: 83, itServices: 88 },
+  { month: "May", seniorDevs: 94, consulting: 87, itServices: 90 },
 ];
 
 export const efficiencyTrend30d = Array.from({ length: 30 }, (_, i) => ({
@@ -345,7 +347,7 @@ export const efficiencyTrend90d = Array.from({ length: 12 }, (_, i) => ({
 }));
 
 export const departmentDistribution = [
-  { name: "Legal", value: 38, color: chartPalette.indigo },
+  { name: "Senior Devs", value: 38, color: chartPalette.indigo },
   { name: "Consulting", value: 32, color: chartPalette.sky },
   { name: "IT Services", value: 24, color: chartPalette.emerald },
   { name: "Compliance", value: 18, color: chartPalette.amber },
@@ -513,7 +515,7 @@ export const planTiers: PlanTier[] = [
     cadence: "month",
     audience: "Solo founders & boutique agencies",
     highlights: [
-      "Workflow DNA capture (up to 50 patterns)",
+      "Workflow DNA capture",
       "Browser-layer prompt library",
       "Basic PFFE hallucination scan",
       "Email support",
