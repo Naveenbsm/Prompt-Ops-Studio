@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Bell, Search, Command } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -21,6 +21,7 @@ import { pageTitles } from "./sidebar-nav";
 import { currentUser } from "@/lib/mock-data";
 import { initials } from "@/lib/utils";
 import { useLocalStorage, storageKeys } from "@/lib/use-local-storage";
+import { toast } from "sonner";
 
 interface ProfileState {
   name: string;
@@ -31,6 +32,7 @@ interface ProfileState {
 }
 
 export function Topbar() {
+  const router = useRouter();
   const pathname = usePathname();
   const matchedKey =
     Object.keys(pageTitles)
@@ -135,11 +137,25 @@ export function Topbar() {
               </Badge>
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile settings</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Workspace</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/settings")}>
+              Profile settings
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push("/settings?tab=billing")}>
+              Billing
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => toast.info("Workspace settings coming soon")}
+            >
+              Workspace
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-rose-600 focus:text-rose-600">
+            <DropdownMenuItem
+              className="text-rose-600 focus:text-rose-600"
+              onClick={() => {
+                toast.success("Signed out successfully");
+                setTimeout(() => router.push("/"), 700);
+              }}
+            >
               Sign out
             </DropdownMenuItem>
           </DropdownMenuContent>

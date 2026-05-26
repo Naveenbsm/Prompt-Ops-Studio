@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { Camera, Check, CreditCard, Sparkles } from "lucide-react";
+import { Camera, Check, CreditCard, Sparkles, ArrowUp, ArrowDown } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PageSkeleton } from "@/components/dashboard/page-skeleton";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import {
   currentUser,
@@ -29,6 +38,7 @@ import {
   planTiers,
   type Integration,
   type NotificationSetting,
+  type PlanTier,
 } from "@/lib/mock-data";
 import { useLocalStorage, storageKeys } from "@/lib/use-local-storage";
 import { formatCurrency, formatDate, initials } from "@/lib/utils";
@@ -60,30 +70,41 @@ export default function SettingsPage() {
             Manage your profile, notifications, integrations, and billing.
           </p>
         </div>
-
-        <Tabs defaultValue="profile">
-          <TabsList>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
-            <TabsTrigger value="notifications">Notifications</TabsTrigger>
-            <TabsTrigger value="integrations">Integrations</TabsTrigger>
-            <TabsTrigger value="billing">Billing</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="profile">
-            <ProfileTab />
-          </TabsContent>
-          <TabsContent value="notifications">
-            <NotificationsTab />
-          </TabsContent>
-          <TabsContent value="integrations">
-            <IntegrationsTab />
-          </TabsContent>
-          <TabsContent value="billing">
-            <BillingTab />
-          </TabsContent>
-        </Tabs>
+        <React.Suspense fallback={null}>
+          <SettingsTabs />
+        </React.Suspense>
       </div>
     </PageSkeleton>
+  );
+}
+
+function SettingsTabs() {
+  const searchParams = useSearchParams();
+  const initialTab = searchParams.get("tab") ?? "profile";
+  const [activeTab, setActiveTab] = React.useState(initialTab);
+
+  return (
+    <Tabs value={activeTab} onValueChange={setActiveTab}>
+      <TabsList>
+        <TabsTrigger value="profile">Profile</TabsTrigger>
+        <TabsTrigger value="notifications">Notifications</TabsTrigger>
+        <TabsTrigger value="integrations">Integrations</TabsTrigger>
+        <TabsTrigger value="billing">Billing</TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="profile">
+        <ProfileTab />
+      </TabsContent>
+      <TabsContent value="notifications">
+        <NotificationsTab />
+      </TabsContent>
+      <TabsContent value="integrations">
+        <IntegrationsTab />
+      </TabsContent>
+      <TabsContent value="billing">
+        <BillingTab />
+      </TabsContent>
+    </Tabs>
   );
 }
 
@@ -304,9 +325,65 @@ function BillingTab() {
     "dna-architect"
   );
   const current = planTiers.find((p) => p.id === activePlan) ?? planTiers[1];
+  const [pendingPlan, setPendingPlan] = React.useState<PlanTier | null>(null);
+
+  const diff = pendingPlan ? pendingPlan.price - current.price : 0;
+  const isUpgrade = diff > 0;
 
   return (
     <div className="space-y-4">
+      {pendingPlan && (
+        <Dialog open onOpenChange={(open) => !open && setPendingPlan(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Switch to {pendingPlan.name}?</DialogTitle>
+              <DialogDescription>
+                {isUpgrade
+                  ? `Your plan will upgrade from ${formatCurrency(current.price)}/mo to ${formatCurrency(pendingPlan.price)}/mo. The price difference will be prorated for the remaining billing cycle.`
+                  : `Your plan will downgrade from ${formatCurrency(current.price)}/mo to ${formatCurrency(pendingPlan.price)}/mo. The credit will be applied to your next invoice.`}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="rounded-lg border border-border p-4 space-y-2 text-sm">
+              <div className="flex justify-between text-muted-foreground">
+                <span>Current plan</span>
+                <span className="text-foreground">
+                  {current.name} · {formatCurrency(current.price)}/mo
+                </span>
+              </div>
+              <div className="flex justify-between text-muted-foreground">
+                <span>New plan</span>
+                <span className="text-foreground">
+                  {pendingPlan.name} · {formatCurrency(pendingPlan.price)}/mo
+                </span>
+              </div>
+              <div className="flex justify-between border-t border-border pt-2 font-medium">
+                <span>{isUpgrade ? "Extra per month" : "Saving per month"}</span>
+                <span className={cn("flex items-center gap-1", isUpgrade ? "text-rose-600" : "text-emerald-600")}>
+                  {isUpgrade ? <ArrowUp className="h-3.5 w-3.5" /> : <ArrowDown className="h-3.5 w-3.5" />}
+                  {formatCurrency(Math.abs(diff))}
+                </span>
+              </div>
+            </div>
+            <DialogFooter>
+              <Button variant="ghost" onClick={() => setPendingPlan(null)}>
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setActivePlan(pendingPlan.id);
+                  toast.success(`Switched to ${pendingPlan.name}`, {
+                    description: `New billing rate: ${formatCurrency(pendingPlan.price)}/mo`,
+                  });
+                  setPendingPlan(null);
+                }}
+              >
+                Confirm switch
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
       <Card className="overflow-hidden">
         <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -320,7 +397,13 @@ function BillingTab() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <Button>
+            <Button
+              onClick={() =>
+                toast.info("Opening billing portal…", {
+                  description: "You'd be redirected to Stripe in a live environment.",
+                })
+              }
+            >
               <CreditCard className="h-4 w-4" /> Manage billing
             </Button>
           </div>
@@ -395,10 +478,7 @@ function BillingTab() {
                   size="sm"
                   className="mt-5"
                   disabled={isCurrent}
-                  onClick={() => {
-                    setActivePlan(tier.id);
-                    toast.success(`Switched to ${tier.name}`);
-                  }}
+                  onClick={() => setPendingPlan(tier)}
                 >
                   {isCurrent ? "Current plan" : `Switch to ${tier.name}`}
                 </Button>
