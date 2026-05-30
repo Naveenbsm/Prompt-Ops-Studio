@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(node_modules\\\\.bin\\\\tsc --noEmit)",
-      "PowerShell(Set-Location \"d:\\\\1a-small-sites\\\\prompt-ops\"; $env:NODE_ENV=\"development\"; node -e \"const path = require\\('path'\\); const ts = require\\(path.join\\(process.cwd\\(\\), 'node_modules/typescript'\\)\\); console.log\\(ts.version\\);\" 2>&1)"
-    ]
-  }
-}
